@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:ef/MOCK_DATA.dart';
 
 class Transaction {
   final int id;
@@ -67,7 +67,7 @@ void main() async {
     });
   }
 
-  Future<void> updateDog(Transaction transaction) async {
+  Future<void> updateTransaction(Transaction transaction) async {
     final db = await database;
 
     await db.update(
@@ -87,4 +87,12 @@ void main() async {
       whereArgs: [id],
     );
   }
+
+  Transaction createTransaction(object){
+    var transaction = Transaction(id:object['id'], category:object['category'], amount:object['amount'], note:object['note'], type:object['type'], currentBalance:object['currentBalance']);
+    return transaction;
+  }
+
+  List<Map<String, Object>> json = new MockData().getData();
+  json.forEach((object) => insertTransaction(createTransaction(object)));
 }
