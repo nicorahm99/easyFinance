@@ -164,6 +164,20 @@ class _DiagramPageState extends State<DiagramPage> {
     );
   }
 
+  TabBar createAppBar() {
+    return TabBar(
+      labelColor: Color(0xff1976d2),
+      indicatorColor: Color(0xff9962D0),
+      tabs: [
+        Tab(
+          icon: Icon(FontAwesomeIcons.solidChartBar),
+        ),
+        Tab(icon: Icon(FontAwesomeIcons.chartPie)),
+        Tab(icon: Icon(FontAwesomeIcons.chartLine)),
+      ],
+    );
+  }
+
   TabBarView buildTabBarView() {
     return TabBarView(
       children: [
@@ -200,7 +214,7 @@ class _DiagramPageState extends State<DiagramPage> {
       ),
     );
   }
-  
+
   List<Widget> buildLineChartContent() {
     return <Widget>[
             Text(
@@ -285,20 +299,6 @@ class _DiagramPageState extends State<DiagramPage> {
               ),
             ),
           ];
-  }
-
-  TabBar createAppBar() {
-    return TabBar(
-      labelColor: Color(0xff1976d2),
-      indicatorColor: Color(0xff9962D0),
-      tabs: [
-        Tab(
-          icon: Icon(FontAwesomeIcons.solidChartBar),
-        ),
-        Tab(icon: Icon(FontAwesomeIcons.chartPie)),
-        Tab(icon: Icon(FontAwesomeIcons.chartLine)),
-      ],
-    );
   }
 }
 
