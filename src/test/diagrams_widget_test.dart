@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
 void main() {
-  testWidgets('NavBar calls right Widgets', (WidgetTester tester) async {
+  testWidgets('diagram bar calls right diagrams', (WidgetTester tester) async {
     // Build our app and goto diagrams
     await tester.pumpWidget(DiagramPage());
 
