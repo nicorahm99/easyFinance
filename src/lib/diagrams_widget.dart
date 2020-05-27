@@ -246,6 +246,7 @@ class _DiagramPageState extends State<DiagramPage> {
             ),
           ];
   }
+  
   List<Widget> buildPieChartContent() {
     return <Widget>[
             Text(
