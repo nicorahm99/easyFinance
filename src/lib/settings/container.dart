@@ -10,7 +10,7 @@ class Div extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.green,
+        color: _color,
       ),
       child: Text('Hello'),
     );
