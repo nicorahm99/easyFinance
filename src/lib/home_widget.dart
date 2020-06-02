@@ -1,4 +1,5 @@
 import 'package:ef/diagrams_widget.dart';
+import 'package:ef/transactions/transactions_widget.dart';
 import 'package:flutter/material.dart';
 import 'placeholder_widget.dart';
 import 'diagrams_widget.dart';
@@ -16,7 +17,7 @@ class _HomeState extends State<Home> {
  int _currentIndex = 0;
  final List<Widget> _children = [
    PlaceholderWidget(Colors.red),
-   PlaceholderWidget(Colors.deepOrange),
+   TransactionPage(),
    DiagramPage(),
    Settings()
  ];
