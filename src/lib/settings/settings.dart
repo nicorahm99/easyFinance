@@ -18,19 +18,25 @@ class Settings extends StatelessWidget {
       //     Div(Colors.red)
       //   ]
       // )
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
+        brightness: Brightness.light,
+        iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
-        title: Text('Settings'),
+        title: Text('Settings', style: TextStyle(color: Colors.black),),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, 
           children: <Widget>[
             Card(
+              margin: const EdgeInsets.all(8.0),
+              color: Colors.green,
               child: ListTile(
-                title: Text('TestName'),
-                leading: CircleAvatar(backgroundColor: Colors.green),
-                trailing: Icon(Icons.edit),
+                title: Text('TestName', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),
+                leading: CircleAvatar(backgroundColor: Colors.lightGreen[200]),
+                trailing: Icon(Icons.edit, color: Colors.white,),
               ),
             )
           ],
