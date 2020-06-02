@@ -28,13 +28,13 @@ class Settings extends StatelessWidget {
         title: Text('Settings', style: TextStyle(color: Colors.black),),
       ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, 
           children: <Widget>[
             Card(
               elevation: 4.0, // shadow
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-              margin: const EdgeInsets.all(8.0),
               color: Colors.green,
               child: ListTile(
                 onTap: (){
@@ -80,8 +80,43 @@ class Settings extends StatelessWidget {
                   ),
                 ],
               ),
-            )
-
+            ),
+            const SizedBox(height: 10.0,),
+            Text("Notification Settings", style: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.green,
+              ),
+            ),
+            SwitchListTile(
+              //dense: true,
+              activeColor: Colors.green,
+              //contentPadding: const EdgeInsets.all(0),
+              value: true,
+              title: Text("Received notification"),
+              onChanged: (val){},
+            ),
+            SwitchListTile(
+              activeColor: Colors.green,
+              //contentPadding: const EdgeInsets.all(0),
+              value: false,
+              title: Text("Bank Balance Warnings"),
+              onChanged: (val){},
+            ),
+            SwitchListTile(
+              activeColor: Colors.green,
+              //contentPadding: const EdgeInsets.all(0),
+              value: false,
+              title: Text("Received Transaction"),
+              onChanged: (val){},
+            ),
+            SwitchListTile(
+              activeColor: Colors.green,
+              //contentPadding: const EdgeInsets.all(0),
+              value: false,
+              title: Text("Received App Updates"),
+              onChanged: null,
+            ),
           ],
         )
       ),
