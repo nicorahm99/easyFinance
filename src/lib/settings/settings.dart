@@ -9,16 +9,7 @@ class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // body: Column(
-      //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //   crossAxisAlignment: CrossAxisAlignment.stretch,
-      //   children: [
-      //     Div(Colors.red),
-      //     Div(Colors.green),
-      //     Div(Colors.blue),
-      //     Div(Colors.red)
-      //   ]
-      // )
+      // Settings title
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
         elevation: 0,
@@ -27,12 +18,13 @@ class Settings extends StatelessWidget {
         backgroundColor: Colors.grey.shade200,
         title: Text('Settings', style: TextStyle(color: Colors.black),),
       ),
+      // body
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, 
           children: <Widget>[
-            Card(
+            Card(// account view
               elevation: 4.0, // shadow
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
               color: Colors.green,
@@ -46,12 +38,21 @@ class Settings extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10.0),
-            Card(
+            Card(// setting pages 
               elevation: 4.0, // shadow
               margin: const EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 16.0),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
               child: Column(
                 children: <Widget>[
+                  ListTile(
+                    leading: Icon(Icons.attach_money, color: Colors.green,),
+                    title: Text('Set Initial Bank-Balance'),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap: (){
+                      //open set bank balance
+                    },
+                  ),
+                  buildDevider(),
                   ListTile(
                     leading: Icon(Icons.lock_outline, color: Colors.green,),
                     title: Text('Change Password'),
@@ -78,9 +79,19 @@ class Settings extends StatelessWidget {
                       //open change location
                     },
                   ),
+                  buildDevider(),
+                  ListTile(
+                    leading: Icon(Icons.security, color: Colors.green,),
+                    title: Text('Security'),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap: (){
+                      //open change security settings
+                    },
+                  ),
                 ],
               ),
             ),
+            //notification settings
             const SizedBox(height: 10.0,),
             Text("Notification Settings", style: TextStyle(
               fontSize: 20.0,
