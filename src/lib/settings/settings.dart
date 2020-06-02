@@ -12,11 +12,15 @@ class Settings extends StatelessWidget {
       // Settings title
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-        elevation: 0,
+        elevation: 4.0,
         brightness: Brightness.light,
         iconTheme: IconThemeData(color: Colors.black),
-        backgroundColor: Colors.grey.shade200,
-        title: Text('Settings', style: TextStyle(color: Colors.black),),
+        backgroundColor: Colors.lightGreen[200],
+        title: Text('Settings', style: TextStyle(
+          color: Colors.green,
+          fontSize: 20,
+          fontWeight: FontWeight.bold, 
+        ),),
       ),
       // body
       body: SingleChildScrollView(
@@ -38,7 +42,7 @@ class Settings extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10.0),
-            Card(// setting pages 
+            Card(// page opening settings
               elevation: 4.0, // shadow
               margin: const EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 16.0),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
