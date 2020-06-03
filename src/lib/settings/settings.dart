@@ -1,6 +1,4 @@
-import 'package:charts_flutter/flutter.dart' as prefix0;
 import 'package:flutter/material.dart';
-import 'container.dart';
 
 class Settings extends StatelessWidget {
 

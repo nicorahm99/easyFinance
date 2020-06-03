@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'newTransaction_widget.dart';
+
 class AddButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => NewTransaction()));},
       child: ClipOval(
         child: Container(
             color: Colors.blue,

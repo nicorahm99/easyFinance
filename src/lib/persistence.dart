@@ -1,16 +1,15 @@
 import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:ef/MOCK_DATA.dart';
 
 class TransactionDTO {
-  final int id;
-  final String category;
-  final String type;
-  final double amount;
-  final DateTime dateTime;
-  final String note;
-  final double currentBalance;
+  int id;
+  String category;
+  String type;
+  double amount;
+  int dateTime;
+  String note;
+  double currentBalance;
 
   TransactionDTO(
       {this.id,
@@ -24,7 +23,7 @@ class TransactionDTO {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      // 'id': id,
       'category': category,
       'type': type,
       'amount': amount,
@@ -33,6 +32,14 @@ class TransactionDTO {
       'currentBalance': currentBalance
     };
   }
+
+  String getGermanDateTimeString() {
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(this.dateTime);
+    int year = date.year;
+    int month = date.month;
+    int day = date.day;
+    return '$day.$month.$year';
+    }
 }
 
 class DBController {
@@ -41,7 +48,7 @@ class DBController {
       join(await getDatabasesPath(), 'transaction_database.db'),
       onCreate: (db, version) {
         return db.execute(
-          "CREATE TABLE transactions(id INTEGER PRIMARY KEY, category TEXT, type TEXT, amount DOUBLE, dateTime DATETIME, note TEXT,currentBalance DOUBLE)",
+          "CREATE TABLE transactions(id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT, type BINARY, amount DOUBLE, dateTime INTEGER, note TEXT,currentBalance DOUBLE)",
         );
       },
       version: 1,
@@ -105,10 +112,5 @@ class DBController {
         note: object['note'],
         currentBalance: object['currentBalance']);
     return transaction;
-  }
-
-  void fillMockData() {
-    List<Map<String, Object>> json = new MockData().getData();
-    json.forEach((object) => insertTransaction(createTransaction(object)));
   }
 }

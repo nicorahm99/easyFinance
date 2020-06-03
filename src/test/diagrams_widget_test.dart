@@ -1,6 +1,5 @@
 import 'package:ef/diagrams_widget.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
 void main() {
