@@ -1,4 +1,5 @@
 import 'package:ef/transactions/addButton_widget.dart';
+import 'package:ef/transactions/newTransaction_widget.dart';
 import 'package:ef/transactions/transactionItem_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ef/persistence.dart';
@@ -56,7 +57,13 @@ class _TransactionPageState extends State<TransactionPage> {
           ]),
           floatingActionButton: Align(
             alignment: Alignment.bottomRight,
-            child: AddButton(),
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => NewTransaction()),
+                  ).then((v) => _fetchData());
+                },
+                child: AddButton(),
+              ),
           ));
     }
 

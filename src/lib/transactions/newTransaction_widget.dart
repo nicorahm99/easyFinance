@@ -135,10 +135,7 @@ class _NewTransactionState extends State<NewTransaction> {
     }
     _formKey.currentState.save();
 
-    _transaction.id = _getUniqueId();
     await DBController().insertTransaction(_transaction);
-    List<TransactionDTO> debug = await DBController().transactions();
-    debug.forEach((element) {print(element.id.toString());});
     Navigator.pop(context);
   }
 
@@ -176,15 +173,5 @@ class _NewTransactionState extends State<NewTransaction> {
             ),
           ),
         ));
-  }
-
-  int _getUniqueId() {
-    return int.parse(
-        UniqueKey()
-            .toString()
-            .replaceAll('#', '')
-            .replaceAll('[', '')
-            .replaceAll(']', ''),
-        radix: 16);
   }
 }
