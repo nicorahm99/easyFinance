@@ -1,3 +1,4 @@
+import 'package:ef/transactions/addButton_widget.dart';
 import 'package:ef/transactions/transaction_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ef/persistence.dart';
@@ -31,27 +32,38 @@ class _TransactionPageState extends State<TransactionPage> {
   @override
   Widget build(BuildContext context) {
     if (transactions.isEmpty) {
-      return Center(
-        child: RichText(
-          text: TextSpan(
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.lightBlue,
-            ),
-            children: <TextSpan>[
-              TextSpan(
-                text: 'Du hast noch nichts Ausgegeben.\n',
+      return Scaffold(
+          appBar: null,
+          body: Center(
+              child: RichText(
+            text: TextSpan(
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.lightBlue,
               ),
-              TextSpan(
-                text: 'Herzlichen Glückwunsch!',
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
-            ],
-          ),
-        ) 
-      );
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'Du hast noch nichts Ausgegeben.\n',
+                ),
+                TextSpan(
+                    text: 'Herzlichen Glückwunsch!',
+                    style:
+                        TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+              ],
+            ),
+          )),
+          floatingActionButton: Align(
+            alignment: Alignment.bottomRight,
+            child: AddButton(),
+          ));
     }
-    return Column(
-      children: buildTransactionItemsList(),
+
+    return Scaffold(
+      body: Column(children: buildTransactionItemsList()),
+      floatingActionButton: Align(
+        alignment: Alignment.bottomRight,
+        child: AddButton(),
+      ),
     );
   }
 
