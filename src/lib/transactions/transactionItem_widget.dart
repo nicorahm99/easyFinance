@@ -23,24 +23,32 @@ class TransactionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: Container(
+    return Container(
             child: Column(
       children: <Widget>[
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
+            ClipOval(
+          child: Container(
+              color: Colors.blue,
+              height: 40.0, // height of the button
+              width: 40.0, // width of the button
+              child: Center(child: Text(transaction.category[0].toUpperCase(), style: TextStyle(color: Colors.white, fontSize: 30))),
+              ),
+        ),
+            Text(transaction.category),
+            SizedBox(width: 80,),
             _buildRealAmount(),
-            Text(transaction.getGermanDateTimeString())
           ],
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(transaction.category),
-            Text(transaction.note)
+            Text(transaction.note, style: TextStyle(color: Colors.grey),)
           ],
         )
       ],
-    )));
+    ));
   }
 }

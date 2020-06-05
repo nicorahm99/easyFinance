@@ -1,6 +1,5 @@
 import 'package:ef/transactions/addButton_widget.dart';
-import 'package:ef/transactions/newTransaction_widget.dart';
-import 'package:ef/transactions/transactionItem_widget.dart';
+import 'package:ef/transactions/transactionItemContainer_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ef/persistence.dart';
 import 'package:flutter/material.dart';
@@ -34,41 +33,41 @@ class _TransactionPageState extends State<TransactionPage> {
   Widget build(BuildContext context) {
     if (_transactions == null && _transactions.isEmpty) {
       return Scaffold(
-          appBar: null,
-          body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Center(
-                child: RichText(
-              text: TextSpan(
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.lightBlue,
+        appBar: null,
+        body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Center(
+              child: RichText(
+            text: TextSpan(
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.lightBlue,
+              ),
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'Du hast noch nichts Ausgegeben.\n',
                 ),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: 'Du hast noch nichts Ausgegeben.\n',
-                  ),
-                  TextSpan(
-                      text: 'Herzlichen Glückwunsch!',
-                      style:
-                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
-                ],
-              ),
-            ))
-          ]),
-          floatingActionButton: Align(
-            alignment: Alignment.bottomRight,
-            child: GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => NewTransaction()),
-                  ).then((v) => _fetchData());
-                },
-                child: AddButton(),
-              ),
-          ));
+                TextSpan(
+                    text: 'Herzlichen Glückwunsch!',
+                    style:
+                        TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ))
+        ]),
+        floatingActionButton: Align(
+          alignment: Alignment.bottomRight,
+          child: AddButton(),
+        ),
+      );
     }
 
     return Scaffold(
-      body: Column(children: buildTransactionItemsList()),
+      body: Padding(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            children: _buildTransactionItemContainerList()
+          )
+        ),
       floatingActionButton: Align(
         alignment: Alignment.bottomRight,
         child: AddButton(),
@@ -76,12 +75,54 @@ class _TransactionPageState extends State<TransactionPage> {
     );
   }
 
-  List<TransactionItem> buildTransactionItemsList() {
-    List<TransactionItem> items = List<TransactionItem>();
-    _transactions.forEach((transaction) {
-      TransactionItem _transactionItem = TransactionItem(transaction);
-      items.add(_transactionItem);
-     });
-    return items;
+  List<Widget> _buildTransactionItemContainerList() {
+    List<Widget> transactionContainers =
+        List<Widget>();
+
+    List<TransactionDTO> manipulatedTransactions = _transactions;
+    manipulatedTransactions.sort((a,b) => a.dateTime.compareTo(b.dateTime));
+
+    while (manipulatedTransactions.isNotEmpty) {
+      List<TransactionDTO> cutTransactions = getAllTransactionsHavingDate(
+          manipulatedTransactions, manipulatedTransactions[0].dateTime);
+      manipulatedTransactions =
+          removeGivenTransactionsfrom(manipulatedTransactions, cutTransactions);
+
+      transactionContainers.add(TransactionItemContainer(cutTransactions));
+      transactionContainers.add(Divider(color: Color.fromRGBO(255, 255, 255, 0),));
+    }
+
+    return transactionContainers;
+  }
+
+  List<TransactionDTO> getAllTransactionsHavingDate(
+      List<TransactionDTO> manipulatedTransactions, int dateTime) {
+    List<TransactionDTO> foundTransactions = List<TransactionDTO>();
+    manipulatedTransactions.forEach((element) {
+      if (_isSameDay(element.dateTime, dateTime)) {
+        foundTransactions.add(element);
+      }
+    });
+    return foundTransactions;
+  }
+
+  List<TransactionDTO> removeGivenTransactionsfrom(
+      List<TransactionDTO> sourceTransactions,
+      List<TransactionDTO> givenTransactions) {
+    givenTransactions.forEach((element) {
+      sourceTransactions.remove(element);
+    });
+    return sourceTransactions;
+  }
+
+  bool _isSameDay(int dateTime, int dateTime2) {
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(dateTime);
+    DateTime date2 = DateTime.fromMillisecondsSinceEpoch(dateTime2);
+    if (date.year == date2.year &&
+        date.month == date2.month &&
+        date.day == date2.day) {
+      return true;
+    }
+    return false;
   }
 }

@@ -1,5 +1,4 @@
 import 'package:ef/persistence.dart';
-import 'package:ef/transactions/transactionItem_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
