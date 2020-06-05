@@ -1,3 +1,4 @@
+import 'package:ef/transactions/editTransaction_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ef/persistence.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,8 @@ class TransactionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+            onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => EditTransaction(transaction)));},
             child: Column(
       children: <Widget>[
         Row(
