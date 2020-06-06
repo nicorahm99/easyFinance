@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 
 class TransactionDTO {
   int id;
-  String category;
+  int category;
   String type;
   double amount;
   int dateTime;
@@ -42,13 +42,33 @@ class TransactionDTO {
     }
 }
 
+class CategoryDTO{
+  int id;
+  String category;
+
+  CategoryDTO({
+    this.id,
+    this.category
+  });
+
+  Map<String, dynamic> toMap(){
+    return {
+      'id': id,
+      'category': category
+    };
+  }
+}
+
 class DBController {
   openDB() async {
     return openDatabase(
       join(await getDatabasesPath(), 'transaction_database.db'),
       onCreate: (db, version) {
-        return db.execute(
-          "CREATE TABLE transactions(id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT, type BINARY, amount DOUBLE, dateTime INTEGER, note TEXT,currentBalance DOUBLE)",
+        db.execute(
+          "CREATE TABLE transactions(id INTEGER PRIMARY KEY AUTOINCREMENT, category INTEGER, type BINARY, amount DOUBLE, dateTime INTEGER, note TEXT,currentBalance DOUBLE, FOREIGN KEY(category) REFERENCES categories(id))",
+        );
+        db.execute(
+          "CREATE TABLE categories(id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT)",
         );
       },
       version: 1,
@@ -112,5 +132,87 @@ class DBController {
         note: object['note'],
         currentBalance: object['currentBalance']);
     return transaction;
+  }
+
+  Future<void> insertCategory(String category) async{
+    final Database db = await openDB();
+    await db.insert(
+      'categories',
+      {'category':category},
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );  
+  }
+
+  Future<List<CategoryDTO>> categories() async{
+    final Database db = await openDB();
+
+    final List<Map<String, dynamic>> maps = await db.query('categories');
+
+    return List.generate(maps.length, (i) {
+      return CategoryDTO(
+          id: maps[i]['id'],
+          category: maps[i]['category']);
+    }); 
+  }
+
+  Future<void> updateCategory(CategoryDTO category) async {
+    final db = await openDB();
+
+    await db.update(
+      'categories',
+      category.toMap(),
+      where: "id = ?",
+      whereArgs: [category.id],
+    );
+  }
+
+  Future<void> deleteCategory(int id) async {
+    final db = await openDB();
+
+    await db.delete(
+      'transactions',
+      where: "id = ?",
+      whereArgs: [id],
+    );
+  }
+
+  Future<CategoryDTO> getCategoryById(int id) async{
+    if (id < 0){
+      return CategoryDTO(id: -1, category: 'Please Choose');
+    }
+    
+    final Database db = await openDB();
+      
+    List<Map<String, dynamic>> result = await db.query(
+      'categories',
+      where: "id = ?",
+      whereArgs: [id],
+    );
+
+    if (result.isEmpty){
+      throw new Exception();
+    }
+    return CategoryDTO(
+      id: result[0]['id'],
+      category: result[0]['category']);
+  }
+
+  void addBasicCategories(){
+    final List<String> categoryNames = [
+      'Miscellaneous',
+      'Car', 
+      'Food',
+      'Household',
+      'Pets',
+      'Rent',
+      'Toys',
+      'Insurance',
+      'Salary',
+      'Presents',
+      'Subscriptions',
+      'Entertainment'
+      ];
+    
+    categoryNames.forEach((element) {insertCategory(element);});
   }
 }

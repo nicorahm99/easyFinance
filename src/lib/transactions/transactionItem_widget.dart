@@ -3,54 +3,91 @@ import 'package:flutter/cupertino.dart';
 import 'package:ef/persistence.dart';
 import 'package:flutter/material.dart';
 
-class TransactionItem extends StatelessWidget {
-  final TransactionDTO transaction;
-  const TransactionItem(this.transaction);
+class TransactionItem extends StatefulWidget {
+  final TransactionDTO transactionDTO;
+  const TransactionItem(this.transactionDTO);
 
-  Widget _buildRealAmount(){
+  _TransactionItemState createState() => _TransactionItemState();
+}
+
+class _TransactionItemState extends State<TransactionItem> {
+  TransactionDTO transaction;
+  CategoryDTO category;
+
+  Widget _buildRealAmount() {
     String output = '';
     TextStyle textStyle = TextStyle();
-    if (transaction.type == 'expense'){
+    if (transaction.type == 'expense') {
       output += '-';
       textStyle = TextStyle(color: Colors.red[800], fontSize: 20);
-    }
-    else if (transaction.type == 'income'){
+    } else if (transaction.type == 'income') {
       output += '+';
       textStyle = TextStyle(color: Colors.green[900], fontSize: 20);
     }
     output += (' ' + transaction.amount.toString());
-    return Text(output, style: textStyle,);
+    return Text(
+      output,
+      style: textStyle,
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    transaction = widget.transactionDTO;
+    _fetchCategory();
+  }
+
+  void _fetchCategory() async {
+    CategoryDTO categoryDTO =
+        await DBController().getCategoryById(transaction.category);
+    setState(() {
+      category = categoryDTO;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-            onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => EditTransaction(transaction)));},
-            child: Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => EditTransaction(transaction)));
+        },
+        child: Column(
           children: <Widget>[
-            ClipOval(
-          child: Container(
-              color: Colors.blue,
-              height: 40.0, // height of the button
-              width: 40.0, // width of the button
-              child: Center(child: Text(transaction.category[0].toUpperCase(), style: TextStyle(color: Colors.white, fontSize: 30))),
-              ),
-        ),
-            Text(transaction.category),
-            SizedBox(width: 80,),
-            _buildRealAmount(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                ClipOval(
+                  child: Container(
+                    color: Colors.blue,
+                    height: 40.0, // height of the button
+                    width: 40.0, // width of the button
+                    child: Center(
+                        child: Text(category.category[0].toUpperCase(),
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 30))),
+                  ),
+                ),
+                Text(category.category),
+                SizedBox(
+                  width: 80,
+                ),
+                _buildRealAmount(),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  transaction.note,
+                  style: TextStyle(color: Colors.grey),
+                )
+              ],
+            )
           ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(transaction.note, style: TextStyle(color: Colors.grey),)
-          ],
-        )
-      ],
-    ));
+        ));
   }
 }

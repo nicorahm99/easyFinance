@@ -2,6 +2,7 @@ import 'package:ef/transactions/addButton_widget.dart';
 import 'package:ef/transactions/transactionItemContainer_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ef/persistence.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TransactionPage extends StatefulWidget {
@@ -31,7 +32,8 @@ class _TransactionPageState extends State<TransactionPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_transactions == null && _transactions.isEmpty) {
+    if (_transactions == null || _transactions.isEmpty) {
+      _loadInitialValuesForCategories();
       return Scaffold(
         appBar: null,
         body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -62,12 +64,10 @@ class _TransactionPageState extends State<TransactionPage> {
     }
 
     return Scaffold(
-      body: Padding(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            children: _buildTransactionItemContainerList()
-          )
-        ),
+      body: SingleChildScrollView(
+          child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Column(children: _buildTransactionItemContainerList()))),
       floatingActionButton: Align(
         alignment: Alignment.bottomRight,
         child: AddButton(),
@@ -76,11 +76,10 @@ class _TransactionPageState extends State<TransactionPage> {
   }
 
   List<Widget> _buildTransactionItemContainerList() {
-    List<Widget> transactionContainers =
-        List<Widget>();
+    List<Widget> transactionContainers = List<Widget>();
 
     List<TransactionDTO> manipulatedTransactions = _transactions;
-    manipulatedTransactions.sort((a,b) => a.dateTime.compareTo(b.dateTime));
+    manipulatedTransactions.sort((a, b) => a.dateTime.compareTo(b.dateTime));
 
     while (manipulatedTransactions.isNotEmpty) {
       List<TransactionDTO> cutTransactions = getAllTransactionsHavingDate(
@@ -89,7 +88,9 @@ class _TransactionPageState extends State<TransactionPage> {
           removeGivenTransactionsfrom(manipulatedTransactions, cutTransactions);
 
       transactionContainers.add(TransactionItemContainer(cutTransactions));
-      transactionContainers.add(Divider(color: Color.fromRGBO(255, 255, 255, 0),));
+      transactionContainers.add(Divider(
+        color: Color.fromRGBO(255, 255, 255, 0),
+      ));
     }
 
     return transactionContainers;
@@ -124,5 +125,14 @@ class _TransactionPageState extends State<TransactionPage> {
       return true;
     }
     return false;
+  }
+
+  Future<void> _loadInitialValuesForCategories() async {
+    List<CategoryDTO> potential = await DBController().categories();
+    if (potential.isEmpty) {
+      DBController().addBasicCategories();
+    }
+    print('###################################################');
+    potential.forEach((element) {print(element.toMap());});
   }
 }

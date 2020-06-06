@@ -1,4 +1,5 @@
 import 'package:ef/persistence.dart';
+import 'package:ef/transactions/categoryPicker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -68,20 +69,15 @@ class _EditTransactionState extends State<EditTransaction> {
         ]);
   }
 
+
   Widget _buildCategory() {
-    return TextFormField(
-      initialValue: _transaction.category,
-      decoration: InputDecoration(labelText: 'Category'),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'This field is required';
-        }
-        return null;
-      },
-      onSaved: (String value) {
-        _transaction.category = value;
-      },
-    );
+    return CategoryPicker(_transaction.category, setCategory);
+  }
+
+  void setCategory(int value){
+    setState(() {
+      _transaction.category = value;
+    });
   }
 
   Widget _buildNote() {

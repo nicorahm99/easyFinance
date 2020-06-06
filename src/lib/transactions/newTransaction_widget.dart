@@ -1,4 +1,6 @@
 import 'package:ef/persistence.dart';
+import 'package:ef/transactions/categoryPicker_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -62,19 +64,15 @@ class _NewTransactionState extends State<NewTransaction> {
         ]);
   }
 
+
   Widget _buildCategory() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Category'),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'This field is required';
-        }
-        return null;
-      },
-      onSaved: (String value) {
-        _transaction.category = value;
-      },
-    );
+    return CategoryPicker(1, setCategory);
+  }
+
+  void setCategory(int value){
+    setState(() {
+      _transaction.category = value;
+    });
   }
 
   Widget _buildNote() {
@@ -129,7 +127,7 @@ class _NewTransactionState extends State<NewTransaction> {
   }
 
   Future<void> submit() async {
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey.currentState.validate() || _transaction.category < 0) {
       return;
     }
     _formKey.currentState.save();
@@ -150,7 +148,8 @@ class _NewTransactionState extends State<NewTransaction> {
     return Scaffold(
         appBar: AppBar(
             title: Text('new Transaction'), backgroundColor: Colors.green),
-        body: Container(
+        body: SingleChildScrollView(
+        child: Container(
           margin: const EdgeInsets.all(20.0),
           child: Form(
             key: _formKey,
@@ -166,11 +165,11 @@ class _NewTransactionState extends State<NewTransaction> {
                 ),
                 RaisedButton(
                   onPressed: () => submit(),
-                  child: Icon(Icons.check),
+                  child: Icon(Icons.save),
                 )
               ],
             ),
           ),
-        ));
+        )));
   }
 }
