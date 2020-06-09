@@ -1,4 +1,7 @@
+import 'package:ef/settings/password.dart';
+import 'package:ef/settings/security.dart';
 import 'package:flutter/material.dart';
+import 'bankbalance.dart';
 
 class Settings extends StatelessWidget {
 
@@ -34,7 +37,7 @@ class Settings extends StatelessWidget {
             );
   }
 
-  Card _buildMainCard(){
+  Card _buildMainCard(BuildContext context){
     return Card(// page opening settings
               elevation: 4.0, // shadow
               margin: const EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 16.0),
@@ -47,6 +50,10 @@ class Settings extends StatelessWidget {
                     trailing: Icon(Icons.keyboard_arrow_right),
                     onTap: (){
                       //open set bank balance
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BankBalance()),
+                    );
                     },
                   ),
                   buildDevider(),
@@ -56,6 +63,10 @@ class Settings extends StatelessWidget {
                     trailing: Icon(Icons.keyboard_arrow_right),
                     onTap: (){
                       //open change Password
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Password()),
+                    );
                     },
                   ),
                   buildDevider(),
@@ -83,6 +94,10 @@ class Settings extends StatelessWidget {
                     trailing: Icon(Icons.keyboard_arrow_right),
                     onTap: (){
                       //open change security settings
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Security()),
+                    );
                     },
                   ),
                 ],
@@ -104,7 +119,7 @@ class Settings extends StatelessWidget {
           children: <Widget>[
             _buildProfileCard(),
             const SizedBox(height: 10.0),
-            _buildMainCard(),
+            _buildMainCard(context),
             //notification settings
             const SizedBox(height: 10.0,),
             Text("Notification Settings", style: TextStyle(
