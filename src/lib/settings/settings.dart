@@ -4,12 +4,8 @@ class Settings extends StatelessWidget {
 
   Settings();
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // Settings title
-      backgroundColor: Colors.grey.shade200,
-      appBar: AppBar(
+  AppBar _buildAppBar(){
+    return AppBar(
         elevation: 4.0,
         brightness: Brightness.light,
         iconTheme: IconThemeData(color: Colors.black),
@@ -19,14 +15,11 @@ class Settings extends StatelessWidget {
           fontSize: 20,
           fontWeight: FontWeight.bold, 
         ),),
-      ),
-      // body
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, 
-          children: <Widget>[
-            Card(// account view
+      );
+  }
+
+  Card _buildProfileCard(){
+    return Card(// account view
               elevation: 4.0, // shadow
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
               color: Colors.green,
@@ -38,9 +31,11 @@ class Settings extends StatelessWidget {
                 leading: CircleAvatar(backgroundColor: Colors.lightGreen[200]),
                 trailing: Icon(Icons.edit, color: Colors.white,),
               ),
-            ),
-            const SizedBox(height: 10.0),
-            Card(// page opening settings
+            );
+  }
+
+  Card _buildMainCard(){
+    return Card(// page opening settings
               elevation: 4.0, // shadow
               margin: const EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 16.0),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -92,7 +87,24 @@ class Settings extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
+            );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // Settings title
+      backgroundColor: Colors.grey.shade200,
+      appBar: _buildAppBar(),
+      // body
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start, 
+          children: <Widget>[
+            _buildProfileCard(),
+            const SizedBox(height: 10.0),
+            _buildMainCard(),
             //notification settings
             const SizedBox(height: 10.0,),
             Text("Notification Settings", style: TextStyle(
