@@ -78,7 +78,7 @@ class Settings extends StatelessWidget {
                   buildDevider(),
                   ListTile(
                     leading: Icon(Icons.category, color: Colors.green,),
-                    title: Text('Create Cathegories'),
+                    title: Text('Create Categories'),
                     trailing: Icon(Icons.keyboard_arrow_right),
                     onTap: (){
                       //open change Password

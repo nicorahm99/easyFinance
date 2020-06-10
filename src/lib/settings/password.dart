@@ -21,10 +21,10 @@ class Password extends StatelessWidget {
               style: new TextStyle(color: Colors.green, fontSize: 25.0),),
               createDistance(30),
 
-              //textfield
+              //textfield oldPW
               new TextFormField(
                 decoration: new InputDecoration(
-                  labelText: "Password",
+                  labelText: "old Password",
                   fillColor: Colors.white,
                   border: new OutlineInputBorder(
                     borderRadius: new BorderRadius.circular(25.0),
@@ -34,12 +34,35 @@ class Password extends StatelessWidget {
                 ),
                 validator: (val) {
                   if(val.length==0) {
-                    return "Email cannot be empty";
+                    return "password cannot be empty";
                   }else{
                     return null;
                   }
                 },
                 keyboardType: TextInputType.emailAddress,
+                style: new TextStyle(
+                  fontFamily: "Poppins",
+                ),
+              ),
+              createDistance(10),
+              //textfield newPW
+              new TextFormField(
+                decoration: new InputDecoration(
+                  labelText: "new Password",
+                  fillColor: Colors.white,
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(
+                    ),
+                  ),
+                ),
+                validator: (val) {
+                  if(val.length==0) {
+                    return "password cannot be empty";
+                  }else{
+                    return null;
+                  }
+                },
                 style: new TextStyle(
                   fontFamily: "Poppins",
                 ),
