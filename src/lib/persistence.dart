@@ -62,7 +62,7 @@ class CategoryDTO{
 
 class BankbalanceDTO{
   int id;
-  Double currentbalance;
+  double currentbalance;
 
   BankbalanceDTO({
     this.id,

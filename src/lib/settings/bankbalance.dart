@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ef/persistence.dart';
 
 class BankBalance extends StatelessWidget {
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  BankbalanceDTO _bankbalance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,16 +38,22 @@ class BankBalance extends StatelessWidget {
                       ),
                     ),
                   ),
-                  validator: (val) {
-                    if(val.length==0) {
-                      return "amount cannot be empty";
-                    }else{
-                      return null;
-                    }
-                  },
                   style: new TextStyle(
                     fontFamily: "Poppins",
                   ),
+
+                  // validator
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return 'This field is required';
+                    } else if (RegExp(r"\d+(.\d+)?").allMatches(value).length == 1) {
+                      return null;
+                    }
+                    return 'Please enter a valid number';
+                  },
+                  onSaved: (String value) {
+                    _bankbalance.currentbalance = ((double.parse(value) * 100).floorToDouble()) / 100;
+                  },
                 ),
                 createDistance(10),
 
@@ -56,7 +67,8 @@ class BankBalance extends StatelessWidget {
                   ),
                   onPressed: () {
                     // Navigate back to first route when tapped.
-                      Navigator.pop(context);
+                    save();
+                    Navigator.pop(context);
                   },
                   child: Text('Save'),
                 ),
@@ -65,6 +77,15 @@ class BankBalance extends StatelessWidget {
           ),
         ),
     );
+  }
+
+  Future<void> save() async {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+
+    await DBController().insertbankbalance(_bankbalance);
   }
 
   Padding createDistance(double distance) {

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ef/persistence.dart';
 
 class Account extends StatelessWidget {
+  
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  SettingDTO _setting;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +37,11 @@ class Account extends StatelessWidget {
                       ),
                     ),
                   ),
+                  style: new TextStyle(
+                    fontFamily: "Poppins",
+                  ),
+
+                  // validator
                   validator: (val) {
                     if(val.length==0) {
                       return "username cannot be empty";
@@ -39,9 +49,9 @@ class Account extends StatelessWidget {
                       return null;
                     }
                   },
-                  style: new TextStyle(
-                    fontFamily: "Poppins",
-                  ),
+                  onSaved: (String value) {
+                    _setting.username = value;
+                  },
                 ),
                 createDistance(10),
 
@@ -55,6 +65,7 @@ class Account extends StatelessWidget {
                   ),
                   onPressed: () {
                     // Navigate back to first route when tapped.
+                      save();
                       Navigator.pop(context);
                   },
                   child: Text('Save',)//style: TextStyle(fontSize: 10),
@@ -64,6 +75,15 @@ class Account extends StatelessWidget {
           ),
         ),
     );
+  }
+
+  Future<void> save() async {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+
+    await DBController().insertSettings(_setting);
   }
 
   Padding createDistance(double distance) {

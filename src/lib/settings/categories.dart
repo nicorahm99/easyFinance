@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ef/persistence.dart';
 
 class Categories extends StatelessWidget {
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  CategoryDTO _category;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +37,11 @@ class Categories extends StatelessWidget {
                       ),
                     ),
                   ),
+                  style: new TextStyle(
+                    fontFamily: "Poppins",
+                  ),
+
+                  //validator
                   validator: (val) {
                     if(val.length==0) {
                       return "category cannot be empty";
@@ -39,9 +49,9 @@ class Categories extends StatelessWidget {
                       return null;
                     }
                   },
-                  style: new TextStyle(
-                    fontFamily: "Poppins",
-                  ),
+                  onSaved: (String value) {
+                    DBController().insertCategory(value);
+                  },                  
                 ),
                 createDistance(10),
 
@@ -55,7 +65,7 @@ class Categories extends StatelessWidget {
                   ),
                   onPressed: () {
                     // Navigate back to first route when tapped.
-                      Navigator.pop(context);
+                      save(context);
                   },
                   child: Text('Save'),
                 ),
@@ -64,6 +74,14 @@ class Categories extends StatelessWidget {
           ),
         ),
     );
+  }
+
+  Future<void> save(BuildContext context) async {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+    Navigator.pop(context);
   }
 
   Padding createDistance(double distance) {

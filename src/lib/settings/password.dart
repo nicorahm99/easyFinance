@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ef/persistence.dart';
 
 class Password extends StatelessWidget {
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  SettingDTO _setting;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,17 +37,19 @@ class Password extends StatelessWidget {
                     ),
                   ),
                 ),
+                style: new TextStyle(
+                  fontFamily: "Poppins",
+                ),
+
+                //validator
                 validator: (val) {
-                  if(val.length==0) {
-                    return "password cannot be empty";
+                  //check if PW correct
+                  if(val.length<5) {
+                    return "password too short";
                   }else{
                     return null;
                   }
                 },
-                keyboardType: TextInputType.emailAddress,
-                style: new TextStyle(
-                  fontFamily: "Poppins",
-                ),
               ),
               createDistance(10),
               //textfield newPW
@@ -56,16 +63,21 @@ class Password extends StatelessWidget {
                     ),
                   ),
                 ),
+                style: new TextStyle(
+                  fontFamily: "Poppins",
+                ),
+
+                //validator
                 validator: (val) {
-                  if(val.length==0) {
-                    return "password cannot be empty";
+                  if(val.length<5) {
+                    return "password too short";
                   }else{
                     return null;
                   }
                 },
-                style: new TextStyle(
-                  fontFamily: "Poppins",
-                ),
+                onSaved: (String value) {
+                    _setting.username = value;
+                },
               ),
               createDistance(10),
 
@@ -79,7 +91,7 @@ class Password extends StatelessWidget {
                   ),
                 onPressed: () {
                   // Navigate back to first route when tapped.
-                    Navigator.pop(context);
+                  save(context);
                 },
                 child: Text('Save'),
               ),
@@ -87,39 +99,22 @@ class Password extends StatelessWidget {
           )
         ),
       )
-
-      // Column(
-      //   children: <Widget>[
-      //     Center(
-      //       child: TextField(
-      //         decoration: InputDecoration(
-      //           border: InputBorder.none,
-      //           hintText: 'Enter a password'
-      //         ),
-      //       ),
-      //     ),          
-      //     Center(
-      //       child: RaisedButton(
-      //         onPressed: () {
-      //           // Navigate back to first route when tapped.
-      //             Navigator.pop(context);
-      //         },
-      //         child: Text('Save'),
-      //       ),
-      //     ),
-      //   ],
-      // )
     );
   }
 
+  Future<void> save(BuildContext context) async {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+
+    await DBController().insertSettings(_setting);
+    Navigator.pop(context);
+  }
+
+
   Padding createDistance(double distance) {
     return Padding(padding: EdgeInsets.only(top: distance));
-    // return Container(
-    //               margin: const EdgeInsets.symmetric(horizontal: 8.0,),
-    //               width: double.infinity,
-    //               height: 1.0,
-    //               color: Colors.grey.shade400,
-    //             );
   }
 }
 
