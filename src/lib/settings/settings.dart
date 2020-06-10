@@ -1,3 +1,5 @@
+import 'package:ef/settings/account.dart';
+import 'package:ef/settings/categories.dart';
 import 'package:ef/settings/password.dart';
 import 'package:ef/settings/security.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,7 @@ class Settings extends StatelessWidget {
       );
   }
 
-  Card _buildProfileCard(){
+  Card _buildProfileCard(BuildContext context){
     return Card(// account view
               elevation: 4.0, // shadow
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -29,6 +31,10 @@ class Settings extends StatelessWidget {
               child: ListTile(
                 onTap: (){
                   //open edit profile
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Account()),
+                  );
                 },
                 title: Text('TestName', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),
                 leading: CircleAvatar(backgroundColor: Colors.lightGreen[200]),
@@ -71,9 +77,23 @@ class Settings extends StatelessWidget {
                   ),
                   buildDevider(),
                   ListTile(
+                    leading: Icon(Icons.category, color: Colors.green,),
+                    title: Text('Create Cathegories'),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap: (){
+                      //open change Password
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Categories()),
+                    );
+                    },
+                  ),
+                  buildDevider(),
+                  ListTile(
                     leading: Icon(Icons.language, color: Colors.green,),
                     title: Text('Change Language'),
                     trailing: Icon(Icons.keyboard_arrow_right),
+                    enabled: false,
                     onTap: (){
                       //open change language
                     },
@@ -83,6 +103,7 @@ class Settings extends StatelessWidget {
                     leading: Icon(Icons.location_on, color: Colors.green,),
                     title: Text('Change Location'),
                     trailing: Icon(Icons.keyboard_arrow_right),
+                    enabled: false,
                     onTap: (){
                       //open change location
                     },
@@ -92,6 +113,7 @@ class Settings extends StatelessWidget {
                     leading: Icon(Icons.security, color: Colors.green,),
                     title: Text('Security'),
                     trailing: Icon(Icons.keyboard_arrow_right),
+                    enabled: false,
                     onTap: (){
                       //open change security settings
                       Navigator.push(
@@ -117,7 +139,7 @@ class Settings extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, 
           children: <Widget>[
-            _buildProfileCard(),
+            _buildProfileCard(context),
             const SizedBox(height: 10.0),
             _buildMainCard(context),
             //notification settings
