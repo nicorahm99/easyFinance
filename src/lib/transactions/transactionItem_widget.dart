@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 
 class TransactionItem extends StatefulWidget {
   final TransactionDTO transactionDTO;
-  const TransactionItem(this.transactionDTO);
+  final Function callback;
+  const TransactionItem(this.transactionDTO, this.callback);
 
   _TransactionItemState createState() => _TransactionItemState();
 }
@@ -57,7 +58,7 @@ class _TransactionItemState extends State<TransactionItem> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => EditTransaction(transaction)));
+                  builder: (context) => EditTransaction(transaction, widget.callback)));
         },
         child: Column(
           children: <Widget>[

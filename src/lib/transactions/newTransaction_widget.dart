@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class NewTransaction extends StatefulWidget {
-  final Widget child;
+  @required final Function refresh;
 
-  NewTransaction({Key key, this.child}) : super(key: key);
+  NewTransaction({Key key, this.refresh}) : super(key: key);
 
   _NewTransactionState createState() => _NewTransactionState();
 }
@@ -134,6 +134,7 @@ class _NewTransactionState extends State<NewTransaction> {
 
     await DBController().insertTransaction(_transaction);
     Navigator.pop(context);
+    widget.refresh();
   }
 
   @override

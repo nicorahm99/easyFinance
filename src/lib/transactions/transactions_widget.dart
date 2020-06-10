@@ -58,7 +58,7 @@ class _TransactionPageState extends State<TransactionPage> {
         ]),
         floatingActionButton: Align(
           alignment: Alignment.bottomRight,
-          child: AddButton(),
+          child: AddButton(_fetchData),
         ),
       );
     }
@@ -70,7 +70,7 @@ class _TransactionPageState extends State<TransactionPage> {
               child: Column(children: _buildTransactionItemContainerList()))),
       floatingActionButton: Align(
         alignment: Alignment.bottomRight,
-        child: AddButton(),
+        child: AddButton(_fetchData),
       ),
     );
   }
@@ -87,7 +87,7 @@ class _TransactionPageState extends State<TransactionPage> {
       manipulatedTransactions =
           removeGivenTransactionsfrom(manipulatedTransactions, cutTransactions);
 
-      transactionContainers.add(TransactionItemContainer(cutTransactions));
+      transactionContainers.add(TransactionItemContainer(cutTransactions, _fetchData));
       transactionContainers.add(Divider(
         color: Color.fromRGBO(255, 255, 255, 0),
       ));

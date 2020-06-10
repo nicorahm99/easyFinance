@@ -70,6 +70,11 @@ List<DropdownMenuItem<int>> _buildDropdownItemList(){
       items: _buildDropdownItemList(),
     );
     }
-    return Placeholder();
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: Colors.grey
+      ),
+      child: SizedBox(height: 50,),
+    );
   }
 }

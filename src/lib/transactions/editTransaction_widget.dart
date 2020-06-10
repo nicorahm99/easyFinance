@@ -5,7 +5,8 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class EditTransaction extends StatefulWidget {
   final TransactionDTO transaction;
-  const EditTransaction(this.transaction);
+  final Function callback;
+  const EditTransaction(this.transaction, this.callback);
 
   // EditTransaction({Key key, this.transaction}) : super(key: key);
 
@@ -69,12 +70,11 @@ class _EditTransactionState extends State<EditTransaction> {
         ]);
   }
 
-
   Widget _buildCategory() {
     return CategoryPicker(_transaction.category, setCategory);
   }
 
-  void setCategory(int value){
+  void setCategory(int value) {
     setState(() {
       _transaction.category = value;
     });
@@ -140,18 +140,21 @@ class _EditTransactionState extends State<EditTransaction> {
 
     await DBController().updateTransaction(_transaction);
     Navigator.pop(context);
+    widget.callback();
   }
 
   Future<void> delete() async {
     await DBController().deleteTransaction(_transaction.id);
     Navigator.pop(context);
+    widget.callback();
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
             title: Text('Edit Transaction'), backgroundColor: Colors.green),
-        body: Container(
+        body: SingleChildScrollView(
+            child: Container(
           margin: const EdgeInsets.all(20.0),
           child: Form(
             key: _formKey,
@@ -167,12 +170,16 @@ class _EditTransactionState extends State<EditTransaction> {
                 ),
                 Row(
                   children: <Widget>[
-                    Expanded(child: RaisedButton(
+                    Expanded(
+                        child: RaisedButton(
                       onPressed: () => update(),
                       child: Icon(Icons.save),
                     )),
-                    SizedBox(width: 20,),
-                    Expanded(child:RaisedButton(
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                        child: RaisedButton(
                       onPressed: () => delete(),
                       child: Icon(Icons.delete, color: Colors.red),
                     ))
@@ -181,6 +188,6 @@ class _EditTransactionState extends State<EditTransaction> {
               ],
             ),
           ),
-        ));
+        )));
   }
 }

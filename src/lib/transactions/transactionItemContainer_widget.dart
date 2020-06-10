@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 
 class TransactionItemContainer extends StatelessWidget{
   final List<TransactionDTO> transactions;
-  TransactionItemContainer(this.transactions);
+  final Function callback;
+  TransactionItemContainer(this.transactions, this.callback);
   
   List<Widget> _buildTransactionItems(){
     List<Widget> items = List<Widget>();
-    transactions.forEach((element) {items.add(TransactionItem(element)); items.add(Divider(color: Colors.green, thickness: 2,indent: 5,endIndent: 5));});
+    transactions.forEach((element) {items.add(TransactionItem(element, callback)); items.add(Divider(color: Colors.green, thickness: 2,indent: 5,endIndent: 5));});
     items.removeLast();
     items.add(SizedBox(height: 8,));
     return items;
