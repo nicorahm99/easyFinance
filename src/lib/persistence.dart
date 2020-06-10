@@ -91,9 +91,9 @@ class DBController {
         db.execute(
           "CREATE TABLE categories(id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT)",
         );
-        db.execute(
-          "CREATE TABLE settings(id INTEGER PRIMARY KEY AUTOINCREMENT, password TEXT, username TEXT)",
-        );
+        //db.execute(
+        //  "CREATE TABLE settings(id INTEGER PRIMARY KEY AUTOINCREMENT, password TEXT, username TEXT)",
+        //);
       },
       version: 1,
     );
