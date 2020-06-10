@@ -66,7 +66,7 @@ class _NewTransactionState extends State<NewTransaction> {
 
 
   Widget _buildCategory() {
-    return CategoryPicker(1, setCategory);
+    return CategoryPicker(_transaction.category, setCategory);
   }
 
   void setCategory(int value){
@@ -140,7 +140,7 @@ class _NewTransactionState extends State<NewTransaction> {
   void initState() {
     super.initState();
     _transaction = TransactionDTO(
-        type: 'expense', dateTime: DateTime.now().millisecondsSinceEpoch);
+        type: 'expense', category: 1, dateTime: DateTime.now().millisecondsSinceEpoch);
   }
 
   @override
