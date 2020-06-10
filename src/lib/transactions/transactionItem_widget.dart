@@ -25,10 +25,12 @@ class _TransactionItemState extends State<TransactionItem> {
       textStyle = TextStyle(color: Colors.green[900], fontSize: 20);
     }
     output += (' ' + transaction.amount.toString());
-    return Text(
-      output,
-      style: textStyle,
-    );
+    return Padding(
+        padding: EdgeInsets.only(left: 10, right: 10),
+        child: Text(
+          output,
+          style: textStyle,
+        ));
   }
 
   @override
@@ -60,20 +62,22 @@ class _TransactionItemState extends State<TransactionItem> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                ClipOval(
-                  child: Container(
-                    color: Colors.blue,
-                    height: 40.0, // height of the button
-                    width: 40.0, // width of the button
-                    child: Center(
-                        child: Text(category.category[0].toUpperCase(),
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 30))),
-                  ),
-                ),
+                Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: ClipOval(
+                      child: Container(
+                        color: Colors.blue,
+                        height: 40.0, // height of the button
+                        width: 40.0, // width of the button
+                        child: Center(
+                            child: Text(category.category[0].toUpperCase(),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 30))),
+                      ),
+                    )),
                 Text(category.category),
-                SizedBox(
-                  width: 80,
+                Expanded(
+                  child: Container(),
                 ),
                 _buildRealAmount(),
               ],
