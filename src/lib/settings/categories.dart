@@ -17,7 +17,7 @@ class Categories extends StatelessWidget {
               children : [
                 //titel
                 createDistance(140),
-                new Text('Please A New Category',
+                new Text('Please type in a new category',
                 style: new TextStyle(color: Colors.green, fontSize: 25.0),),
                 createDistance(30),
 
@@ -47,6 +47,12 @@ class Categories extends StatelessWidget {
 
                 //button
                 RaisedButton(
+                  color: Colors.white,
+                  //textColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: BorderSide(color: Colors.green, width: 1)
+                  ),
                   onPressed: () {
                     // Navigate back to first route when tapped.
                       Navigator.pop(context);

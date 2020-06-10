@@ -17,7 +17,7 @@ class Account extends StatelessWidget {
               children : [
                 //titel
                 createDistance(140),
-                new Text('Please Enter Your Username',
+                new Text('Please enter your username',
                 style: new TextStyle(color: Colors.green, fontSize: 25.0),),
                 createDistance(30),
 
@@ -47,11 +47,17 @@ class Account extends StatelessWidget {
 
                 //button
                 RaisedButton(
+                  color: Colors.white,
+                  //textColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: BorderSide(color: Colors.green, width: 1)
+                  ),
                   onPressed: () {
                     // Navigate back to first route when tapped.
                       Navigator.pop(context);
                   },
-                  child: Text('Save'),
+                  child: Text('Save',)//style: TextStyle(fontSize: 10),
                 ),
               ]
             )
