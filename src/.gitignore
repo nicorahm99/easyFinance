@@ -9,6 +9,9 @@
 .history
 .svn/
 
+# Von Samuel
+.flutter-plugins-dependencies
+
 
 # IntelliJ related
 *.iml
