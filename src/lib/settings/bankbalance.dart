@@ -9,7 +9,7 @@ class BankBalance extends StatelessWidget {
         backgroundColor: Colors.green,
       ),
       body:
-              new Container (
+        new Container (
           padding: const EdgeInsets.all(30.0),
           color: Colors.white,
           child: new Center(
@@ -17,7 +17,7 @@ class BankBalance extends StatelessWidget {
               children : [
                 //titel
                 createDistance(140),
-                new Text('Please Enter Your Username',
+                new Text('Please enter your bank-balance',
                 style: new TextStyle(color: Colors.green, fontSize: 25.0),),
                 createDistance(30),
 
@@ -48,6 +48,12 @@ class BankBalance extends StatelessWidget {
 
                 //button
                 RaisedButton(
+                  color: Colors.white,
+                  //textColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: BorderSide(color: Colors.green, width: 1)
+                  ),
                   onPressed: () {
                     // Navigate back to first route when tapped.
                       Navigator.pop(context);

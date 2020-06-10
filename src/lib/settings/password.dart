@@ -71,6 +71,12 @@ class Password extends StatelessWidget {
 
               //button
               RaisedButton(
+                color: Colors.white,
+                  //textColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: BorderSide(color: Colors.green, width: 1)
+                  ),
                 onPressed: () {
                   // Navigate back to first route when tapped.
                     Navigator.pop(context);
