@@ -1,5 +1,5 @@
 import 'package:ef/transactions/editTransaction_widget.dart';
-import 'package:ef/transactions/transactionsPlaceholderList_widget.dart';
+import 'package:ef/transactions/transactionItemPlaceholder_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ef/persistence.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +98,7 @@ class _TransactionItemState extends State<TransactionItem> {
     }
     else
     {
-      return TransactionsPlaceholderList();
+      return TransactionItemPlaceholder();
     }
   }
 }
