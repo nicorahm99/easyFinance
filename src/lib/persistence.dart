@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -59,6 +60,23 @@ class CategoryDTO{
   }
 }
 
+class BankbalanceDTO{
+  int id;
+  Double currentbalance;
+
+  BankbalanceDTO({
+    this.id,
+    this.currentbalance
+  });
+
+  Map<String, dynamic> toMap(){
+    return {
+      'id': id,
+      'currentbalance': currentbalance
+    };
+  }
+}
+
 class DBController {
   openDB() async {
     return openDatabase(
@@ -68,7 +86,13 @@ class DBController {
           "CREATE TABLE transactions(id INTEGER PRIMARY KEY AUTOINCREMENT, category INTEGER, type BINARY, amount DOUBLE, dateTime INTEGER, note TEXT,currentBalance DOUBLE, FOREIGN KEY(category) REFERENCES categories(id))",
         );
         db.execute(
+          "CREATE TABLE bankbalance(id INTEGER PRIMARY KEY AUTOINCREMENT, currentbalance DOUBLE)",
+        );
+        db.execute(
           "CREATE TABLE categories(id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT)",
+        );
+        db.execute(
+          "CREATE TABLE settings(id INTEGER PRIMARY KEY AUTOINCREMENT, password TEXT, username TEXT)",
         );
       },
       version: 1,
@@ -214,5 +238,47 @@ class DBController {
       ];
     
     categoryNames.forEach((element) {insertCategory(element);});
+  }
+
+  Future<void> insertbankbalance(BankbalanceDTO bankbalance) async {
+    final Database db = await openDB();
+    await db.insert(
+      'bankbalance',
+      bankbalance.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<List<BankbalanceDTO>> bancbalance() async{
+    final Database db = await openDB();
+
+    final List<Map<String, dynamic>> maps = await db.query('bankbalance');
+
+    return List.generate(maps.length, (i) {
+      return BankbalanceDTO(
+          id: maps[i]['id'],
+          currentbalance: maps[i]['currentbalance']);
+    }); 
+  }
+
+  Future<void> updatebankbalance(BankbalanceDTO bankbalance) async {
+    final db = await openDB();
+
+    await db.update(
+      'bankbalance',
+      bankbalance.toMap(),
+      where: "id = ?",
+      whereArgs: [bankbalance.id],
+    );
+  }
+
+  Future<void> deletebankbalance(int id) async {
+    final db = await openDB();
+
+    await db.delete(
+      'bankbalance',
+      where: "id = ?",
+      whereArgs: [id],
+    );
   }
 }
