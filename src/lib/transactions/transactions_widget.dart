@@ -132,7 +132,5 @@ class _TransactionPageState extends State<TransactionPage> {
     if (potential.isEmpty) {
       DBController().addBasicCategories();
     }
-    print('###################################################');
-    potential.forEach((element) {print(element.toMap());});
   }
 }

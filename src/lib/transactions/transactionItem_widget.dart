@@ -1,4 +1,5 @@
 import 'package:ef/transactions/editTransaction_widget.dart';
+import 'package:ef/transactions/transactionsPlaceholderList_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ef/persistence.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,7 @@ class _TransactionItemState extends State<TransactionItem> {
 
   @override
   Widget build(BuildContext context) {
+    if (category != null) {
     return GestureDetector(
         onTap: () {
           Navigator.push(
@@ -93,5 +95,10 @@ class _TransactionItemState extends State<TransactionItem> {
             )
           ],
         ));
+    }
+    else
+    {
+      return TransactionsPlaceholderList();
+    }
   }
 }
