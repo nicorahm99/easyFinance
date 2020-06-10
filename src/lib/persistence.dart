@@ -77,6 +77,26 @@ class BankbalanceDTO{
   }
 }
 
+class SettingDTO{
+  int id;
+  String password;
+  String username;
+
+  SettingDTO({
+    this.id,
+    this.password,
+    this.username,
+  });
+
+  Map<String, dynamic> toMap(){
+    return {
+      'id': id,
+      'password': password,
+      'username': username,
+    };
+  }
+}
+
 class DBController {
   openDB() async {
     return openDatabase(
@@ -91,9 +111,9 @@ class DBController {
         db.execute(
           "CREATE TABLE categories(id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT)",
         );
-        //db.execute(
-        //  "CREATE TABLE settings(id INTEGER PRIMARY KEY AUTOINCREMENT, password TEXT, username TEXT)",
-        //);
+        db.execute(
+          "CREATE TABLE settings(id INTEGER PRIMARY KEY AUTOINCREMENT, password TEXT, username TEXT)",
+        );
       },
       version: 1,
     );
@@ -249,7 +269,7 @@ class DBController {
     );
   }
 
-  Future<List<BankbalanceDTO>> bancbalance() async{
+  Future<List<BankbalanceDTO>> bankbalance() async{
     final Database db = await openDB();
 
     final List<Map<String, dynamic>> maps = await db.query('bankbalance');
@@ -277,6 +297,49 @@ class DBController {
 
     await db.delete(
       'bankbalance',
+      where: "id = ?",
+      whereArgs: [id],
+    );
+  }
+
+Future<void> insertSettings(SettingDTO setting) async {
+    final Database db = await openDB();
+    await db.insert(
+      'settings',
+      setting.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<List<SettingDTO>> settings() async{
+    final Database db = await openDB();
+
+    final List<Map<String, dynamic>> maps = await db.query('settings');
+
+    return List.generate(maps.length, (i) {
+      return SettingDTO(
+          id: maps[i]['id'],
+          password: maps[i]['password'],
+          username: maps[i]['username']);
+    }); 
+  }
+
+  Future<void> updateSettings(SettingDTO setting) async {
+    final db = await openDB();
+
+    await db.update(
+      'settings',
+      setting.toMap(),
+      where: "id = ?",
+      whereArgs: [setting.id],
+    );
+  }
+
+  Future<void> deleteSettings(int id) async {
+    final db = await openDB();
+
+    await db.delete(
+      'settings',
       where: "id = ?",
       whereArgs: [id],
     );
