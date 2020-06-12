@@ -214,17 +214,13 @@ class DBController {
     final db = await openDB();
 
     await db.delete(
-      'transactions',
+      'categories',
       where: "id = ?",
       whereArgs: [id],
     );
   }
 
   Future<CategoryDTO> getCategoryById(int id) async{
-    if (id < 0){
-      return CategoryDTO(id: -1, category: 'Please Choose');
-    }
-    
     final Database db = await openDB();
       
     List<Map<String, dynamic>> result = await db.query(
@@ -301,6 +297,30 @@ class DBController {
       whereArgs: [id],
     );
   }
+
+  void initalbankbalance(){
+    BankbalanceDTO _initbalance;
+    _initbalance.currentbalance = 0.00;
+    insertbankbalance(_initbalance);
+  }
+
+  Future<BankbalanceDTO> getBankbalanceById(int id) async{
+    final Database db = await openDB();
+      
+    List<Map<String, dynamic>> result = await db.query(
+      'bankbalance',
+      where: "id = ?",
+      whereArgs: [id],
+    );
+
+    if (result.isEmpty){
+      throw new Exception();
+    }
+    return BankbalanceDTO(
+      id: result[0]['id'],
+      currentbalance: result[0]["currentbalance"]);
+  }
+
 
 Future<void> insertSettings(SettingDTO setting) async {
     final Database db = await openDB();
