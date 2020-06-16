@@ -33,7 +33,7 @@ class _TransactionPageState extends State<TransactionPage> {
   @override
   Widget build(BuildContext context) {
     if (_transactions == null || _transactions.isEmpty) {
-      _loadInitialValuesForCategories();
+      _loadInitialValuesForDB();
       return Scaffold(
         appBar: null,
         body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -127,10 +127,18 @@ class _TransactionPageState extends State<TransactionPage> {
     return false;
   }
 
-  Future<void> _loadInitialValuesForCategories() async {
+  Future<void> _loadInitialValuesForDB() async {
     List<CategoryDTO> potential = await DBController().categories();
     if (potential.isEmpty) {
       DBController().addBasicCategories();
+    }
+    List<SettingDTO> firstsettings = await DBController().settings();
+    if (firstsettings.isEmpty) {
+      DBController().initalsettings();
+    }
+    List<BankbalanceDTO> firstbackbalance = await DBController().bankbalance();
+    if (firstbackbalance.isEmpty) {
+      DBController().initalbankbalance();
     }
   }
 }

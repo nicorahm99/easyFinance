@@ -364,4 +364,29 @@ Future<void> insertSettings(SettingDTO setting) async {
       whereArgs: [id],
     );
   }
+
+  void initalsettings(){
+    SettingDTO _initsetting;
+    _initsetting.username = "initial";
+    _initsetting.password = "1234";
+    insertSettings(_initsetting);
+  }
+
+  Future<SettingDTO> getSettingById(int id) async{
+    final Database db = await openDB();
+      
+    List<Map<String, dynamic>> result = await db.query(
+      'settings',
+      where: "id = ?",
+      whereArgs: [id],
+    );
+
+    if (result.isEmpty){
+      throw new Exception();
+    }
+    return SettingDTO(
+      id: result[0]['id'],
+      username: result[0]["username"],
+      password: result[0]["password"]);
+  }
 }
