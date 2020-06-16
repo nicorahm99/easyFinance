@@ -5,7 +5,21 @@ class Account extends StatelessWidget {
   
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   SettingDTO _setting;
+  SettingDTO currentAccount;
   
+  //  @override
+  // void initState() { //built in function of stateful widget
+  //   super.initState();
+  //   _fetchCategories(); // fetch function
+  // }
+
+  // Future<void> _fetchCategories() async { // async but void so theres no need to wait for it
+  //   SettingDTO incomingAccount = await DBController().getSettingById(1); // get value from database
+  //   setState(() {// set value
+  //     currentAccount = incomingAccount; 
+  //   });
+  // }// Page can be loaded and if ready, value will be adapted
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +43,7 @@ class Account extends StatelessWidget {
                 //textfield
                 new TextFormField(
                   decoration: new InputDecoration(
-                    labelText: "username",
+                    labelText: "username", //currentAccount.username
                     fillColor: Colors.white,
                     border: new OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(25.0),
@@ -83,7 +97,7 @@ class Account extends StatelessWidget {
     }
     _formKey.currentState.save();
 
-    await DBController().insertSettings(_setting);
+    await DBController().updateSettings(_setting);
   }
 
   Padding createDistance(double distance) {
