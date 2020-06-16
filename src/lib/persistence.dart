@@ -298,8 +298,7 @@ class DBController {
   }
 
   void initalbankbalance(){
-    BankbalanceDTO _initbalance;
-    _initbalance.currentbalance = 0.00;
+    BankbalanceDTO _initbalance = new BankbalanceDTO(currentbalance: 0.00);
     insertbankbalance(_initbalance);
   }
 
@@ -365,9 +364,7 @@ Future<void> insertSettings(SettingDTO setting) async {
   }
 
   void initalsettings(){
-    SettingDTO _initsetting;
-    _initsetting.username = "initial";
-    _initsetting.password = "1234";
+    SettingDTO _initsetting = new SettingDTO(password: "1234", username: "initial");
     insertSettings(_initsetting);
   }
 
