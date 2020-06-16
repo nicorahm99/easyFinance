@@ -9,13 +9,27 @@ class Settings extends StatelessWidget {
 
   Settings();
 
-  AppBar _buildAppBar(){
-    return AppBar(
+  // AppBar _buildAppBar(){
+  //   return AppBar(
+  //       elevation: 4.0,
+  //       brightness: Brightness.light,
+  //       iconTheme: IconThemeData(color: Colors.black),
+  //       backgroundColor: Colors.lightGreen[200],
+  //       title: Text('Settings', style: TextStyle(
+  //         color: Colors.green,
+  //         fontSize: 20,
+  //         fontWeight: FontWeight.bold, 
+  //       ),),
+  //     );
+  // }
+
+  AppBar _buildAppBar(String _title){
+  return AppBar(
         elevation: 4.0,
         brightness: Brightness.light,
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.lightGreen[200],
-        title: Text('Settings', style: TextStyle(
+        title: Text(_title, style: TextStyle(
           color: Colors.green,
           fontSize: 20,
           fontWeight: FontWeight.bold, 
@@ -132,7 +146,7 @@ class Settings extends StatelessWidget {
     return Scaffold(
       // Settings title
       backgroundColor: Colors.grey.shade200,
-      appBar: _buildAppBar(),
+      appBar: _buildAppBar('Settings'),
       // body
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

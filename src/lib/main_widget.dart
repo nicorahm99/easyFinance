@@ -1,22 +1,22 @@
 import 'package:ef/diagrams_widget.dart';
+import 'package:ef/home/home_widget.dart';
 import 'package:ef/transactions/transactions_widget.dart';
 import 'package:flutter/material.dart';
-import 'placeholder_widget.dart';
 import 'diagrams_widget.dart';
 import './settings/settings.dart';
 
 
-class Home extends StatefulWidget {
+class Main extends StatefulWidget {
  @override
  State<StatefulWidget> createState() {
-    return _HomeState();
+    return _MainState();
   }
 }
 
-class _HomeState extends State<Home> {
+class _MainState extends State<Main> {
  int _currentIndex = 0;
  final List<Widget> _children = [
-   PlaceholderWidget(Colors.red),
+   Home(),
    TransactionPage(),
    DiagramPage(),
    Settings()

@@ -35,7 +35,7 @@ class _TransactionPageState extends State<TransactionPage> {
     if (_transactions == null || _transactions.isEmpty) {
       _loadInitialValuesForDB();
       return Scaffold(
-        appBar: null,
+        appBar: _buildAppBar('Transactions'),
         body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Center(
               child: RichText(
@@ -64,7 +64,8 @@ class _TransactionPageState extends State<TransactionPage> {
     }
 
     return Scaffold(
-      body: SingleChildScrollView(
+        appBar: _buildAppBar('Transactions'),
+        body: SingleChildScrollView(
           child: Padding(
               padding: EdgeInsets.all(10),
               child: Column(children: _buildTransactionItemContainerList()))),
@@ -73,6 +74,20 @@ class _TransactionPageState extends State<TransactionPage> {
         child: AddButton(_fetchData),
       ),
     );
+  }
+
+  AppBar _buildAppBar(String _title){
+  return AppBar(
+        elevation: 4.0,
+        brightness: Brightness.light,
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.lightGreen[200],
+        title: Text(_title, style: TextStyle(
+          color: Colors.green,
+          fontSize: 20,
+          fontWeight: FontWeight.bold, 
+        ),),
+      );
   }
 
   List<Widget> _buildTransactionItemContainerList() {

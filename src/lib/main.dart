@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home_widget.dart';
+import 'main_widget.dart';
 
 
 void main() => runApp(App());
@@ -10,7 +10,7 @@ class App extends StatelessWidget {
    return MaterialApp(
      debugShowCheckedModeBanner: false,
      title: 'easyFinance',
-     home: Home(),
+     home: Main(),
    );
  }
 }
