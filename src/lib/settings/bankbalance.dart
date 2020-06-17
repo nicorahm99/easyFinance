@@ -85,7 +85,7 @@ class _BankBalanceState extends State<BankBalance> {
   }
 
   Future<void> save(BuildContext context) async {
-    _bankbalance = await DBController().getBankbalanceById(1);
+    _bankbalance = await DBController().getBankbalance();
     
     if (!_formKeySBB.currentState.validate()) {
       return;

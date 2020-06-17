@@ -345,13 +345,13 @@ class DBController {
     insertbankbalance(_initbalance);
   }
 
-  Future<BankbalanceDTO> getBankbalanceById(int id) async{
+  Future<BankbalanceDTO> getBankbalance() async{
     final Database db = await openDB();
       
     List<Map<String, dynamic>> result = await db.query(
       'bankbalance',
       where: "id = ?",
-      whereArgs: [id],
+      whereArgs: [1],
     );
 
     if (result.isEmpty){
@@ -411,13 +411,13 @@ Future<void> insertSettings(SettingDTO setting) async {
     insertSettings(_initsetting);
   }
 
-  Future<SettingDTO> getSettingById(int id) async{
+  Future<SettingDTO> getSetting() async{
     final Database db = await openDB();
       
     List<Map<String, dynamic>> result = await db.query(
       'settings',
       where: "id = ?",
-      whereArgs: [id],
+      whereArgs: [1],
     );
 
     if (result.isEmpty){

@@ -22,7 +22,7 @@ class _SettingsState extends State<Settings> {
   }
 
   Future<void> _fetchData() async { // async but void so theres no need to wait for it
-    SettingDTO incomingSetting = await DBController().getSettingById(1); // get value from database
+    SettingDTO incomingSetting = await DBController().getSetting(); // get value from database
     setState(() {// set value
       _currentSetting = incomingSetting;
     });

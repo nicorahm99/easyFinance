@@ -133,7 +133,7 @@ class _NewTransactionState extends State<NewTransaction> {
     }
     _formKey.currentState.save();
 
-    _currentBalance = await DBController().getBankbalanceById(1);
+    _currentBalance = await DBController().getBankbalance();
     double _currentBalanceValue = _currentBalance.currentbalance;
     double _newBalanceValue;
 

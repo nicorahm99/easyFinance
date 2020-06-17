@@ -19,7 +19,7 @@ class _PasswordState extends State<Password> {
   }
 
   Future<void> _fetchCategories() async { // async but void so theres no need to wait for it
-    SettingDTO incomingAccount = await DBController().getSettingById(1); // get value from database
+    SettingDTO incomingAccount = await DBController().getSetting(); // get value from database
     setState(() {// set value
       _currentSetting = incomingAccount;
     });

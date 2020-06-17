@@ -135,7 +135,7 @@ class _EditTransactionState extends State<EditTransaction> {
 
   Future<void> update() async {
     TransactionDTO _oldtransaction = await DBController().getTransactionById(_transaction.id);
-    _bankBalance = await DBController().getBankbalanceById(1);
+    _bankBalance = await DBController().getBankbalance();
     double _currentbalance = _bankBalance.currentbalance;
     double _oldbalance;
     if (_oldtransaction.type == "income") {
@@ -166,7 +166,7 @@ class _EditTransactionState extends State<EditTransaction> {
 
   Future<void> delete() async {
     TransactionDTO _oldtransaction = await DBController().getTransactionById(_transaction.id);
-    _bankBalance = await DBController().getBankbalanceById(1);
+    _bankBalance = await DBController().getBankbalance();
     double _currentbalance = _bankBalance.currentbalance;
     double _newbalance;
     if (_oldtransaction.type == "income") {

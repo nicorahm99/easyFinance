@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
 
   void _fetchData() async {
     await _loadInitialValuesForDB();
-    _currentbalance = await DBController().getBankbalanceById(1);
+    _currentbalance = await DBController().getBankbalance();
     List<TransactionDTO> transactions = await _getTransactionsOfActualMonth();
     transactions.forEach((element) {
       if (element.type == 'income') {

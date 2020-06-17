@@ -84,7 +84,7 @@ class _AccountState extends State<Account> {
   }
 
   Future<void> save(BuildContext context) async {
-    _currentAccount = await DBController().getSettingById(1);
+    _currentAccount = await DBController().getSetting();
     
     if (!_formKeySA.currentState.validate()) {
       return;
