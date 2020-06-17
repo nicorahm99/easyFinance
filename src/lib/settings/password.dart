@@ -6,6 +6,19 @@ class Password extends StatefulWidget{
   _PasswordState createState() => _PasswordState();
 }
 
+  //  @override
+  // void initState() { //built in function of stateful widget
+  //   super.initState();
+  //   _fetchCategories(); // fetch function
+  // }
+
+  // Future<void> _fetchCategories() async { // async but void so theres no need to wait for it
+  //   SettingDTO incomingAccount = await DBController().getSettingById(1); // get value from database
+  //   setState(() {// set value
+  //     _currentAccount = incomingAccount;
+  //   });
+  // }// Page can be loaded and if ready, value will be adapted
+
 class _PasswordState extends State<Password> {
   static GlobalKey<FormState> _formKeySP = GlobalKey<FormState>();
   SettingDTO _currentSetting;

@@ -8,7 +8,7 @@ class BankBalance extends StatefulWidget{
 
 class _BankBalanceState extends State<BankBalance> {
   static GlobalKey<FormState> _formKeySBB = GlobalKey<FormState>();
-  BankbalanceDTO _bankbalance;// liegt hier dran, das müsste final sein
+  BankbalanceDTO _bankbalance;
 
   @override
   Widget build(BuildContext context) {
@@ -85,11 +85,13 @@ class _BankBalanceState extends State<BankBalance> {
   }
 
   Future<void> save(BuildContext context) async {
+    _bankbalance = await DBController().getBankbalanceById(1);
+    
     if (!_formKeySBB.currentState.validate()) {
       return;
     }
-    _formKeySBB.currentState.save(); // hier springt es raus, validator ok
-    await DBController().insertbankbalance(_bankbalance);
+    _formKeySBB.currentState.save();
+    await DBController().updatebankbalance(_bankbalance);
     Navigator.pop(context);
   }
 

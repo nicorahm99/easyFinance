@@ -8,21 +8,7 @@ class Account extends StatefulWidget {
 
 class _AccountState extends State<Account> {
   static GlobalKey<FormState> _formKeySA = GlobalKey<FormState>();
-  SettingDTO _setting;// liegt hier dran, das müsste final sein
-  SettingDTO currentAccount;
-
-  //  @override
-  // void initState() { //built in function of stateful widget
-  //   super.initState();
-  //   _fetchCategories(); // fetch function
-  // }
-
-  // Future<void> _fetchCategories() async { // async but void so theres no need to wait for it
-  //   SettingDTO incomingAccount = await DBController().getSettingById(1); // get value from database
-  //   setState(() {// set value
-  //     currentAccount = incomingAccount;
-  //   });
-  // }// Page can be loaded and if ready, value will be adapted
+  SettingDTO _currentAccount;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +36,7 @@ class _AccountState extends State<Account> {
                     //textfield
                     new TextFormField(
                       decoration: new InputDecoration(
-                        labelText: "username", //currentAccount.username
+                        labelText: "username",
                         fillColor: Colors.white,
                         border: new OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(25.0),
@@ -70,7 +56,7 @@ class _AccountState extends State<Account> {
                         }
                       },
                       onSaved: (String value) {
-                        _setting.username = value;
+                        _currentAccount.username = value;
                       },
                     ),
                     createDistance(10),
@@ -95,12 +81,14 @@ class _AccountState extends State<Account> {
   }
 
   Future<void> save(BuildContext context) async {
+    _currentAccount = await DBController().getSettingById(1);
+    
     if (!_formKeySA.currentState.validate()) {
       return;
     }
     _formKeySA.currentState.save();// hier springt es raus, validator ok
 
-    await DBController().updateSettings(_setting);
+    await DBController().updateSettings(_currentAccount);
     Navigator.pop(context);
   }
 
