@@ -14,6 +14,7 @@ class NewTransaction extends StatefulWidget {
 
 class _NewTransactionState extends State<NewTransaction> {
   TransactionDTO _transaction;
+  BankbalanceDTO _currentBalance;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -131,6 +132,21 @@ class _NewTransactionState extends State<NewTransaction> {
       return;
     }
     _formKey.currentState.save();
+
+    _currentBalance = await DBController().getBankbalanceById(1);
+    double _currentBalanceValue = _currentBalance.currentbalance;
+
+    if (_transaction.type == "income") {
+      _transaction.currentBalance = _currentBalanceValue;
+      double _newBalanceValue = _currentBalanceValue + _transaction.amount;
+      _currentBalance.currentbalance = _newBalanceValue;
+      await DBController().updatebankbalance(_currentBalance);
+    } else {
+       _transaction.currentBalance = _currentBalanceValue;
+      double _newBalanceValue = _currentBalanceValue - _transaction.amount;
+      _currentBalance.currentbalance = _newBalanceValue;
+      await DBController().updatebankbalance(_currentBalance);
+    }
 
     await DBController().insertTransaction(_transaction);
     Navigator.pop(context);
