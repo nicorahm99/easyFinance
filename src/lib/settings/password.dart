@@ -6,22 +6,24 @@ class Password extends StatefulWidget{
   _PasswordState createState() => _PasswordState();
 }
 
-  //  @override
-  // void initState() { //built in function of stateful widget
-  //   super.initState();
-  //   _fetchCategories(); // fetch function
-  // }
-
-  // Future<void> _fetchCategories() async { // async but void so theres no need to wait for it
-  //   SettingDTO incomingAccount = await DBController().getSettingById(1); // get value from database
-  //   setState(() {// set value
-  //     _currentAccount = incomingAccount;
-  //   });
-  // }// Page can be loaded and if ready, value will be adapted
 
 class _PasswordState extends State<Password> {
   static GlobalKey<FormState> _formKeySP = GlobalKey<FormState>();
   SettingDTO _currentSetting;
+
+  
+   @override
+  void initState() { //built in function of stateful widget
+    super.initState();
+    _fetchCategories(); // fetch function
+  }
+
+  Future<void> _fetchCategories() async { // async but void so theres no need to wait for it
+    SettingDTO incomingAccount = await DBController().getSettingById(1); // get value from database
+    setState(() {// set value
+      _currentSetting = incomingAccount;
+    });
+  }// Page can be loaded and if ready, value will be adapted
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +66,8 @@ class _PasswordState extends State<Password> {
                       //validator
                       validator: (val) {
                         //check if PW correct
-                        if (val.length < 5) {
-                          return "password too short";
+                        if (val != _currentSetting.password) {
+                          return "incorrect password!";
                         } else {
                           return null;
                         }
@@ -118,8 +120,6 @@ class _PasswordState extends State<Password> {
   }
 
   Future<void> save(BuildContext context) async {
-    _currentSetting = await DBController().getSettingById(1);
-    
     if (!_formKeySP.currentState.validate()) {
       return;
     }

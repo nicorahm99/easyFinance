@@ -1,27 +1,33 @@
-import 'package:ef/settings/account.dart';
-import 'package:ef/settings/categories.dart';
-import 'package:ef/settings/password.dart';
-import 'package:ef/settings/security.dart';
-import 'package:flutter/material.dart';
+import 'account.dart';
+import 'categories.dart';
+import 'password.dart';
+import 'security.dart';
 import 'bankbalance.dart';
+import 'package:flutter/material.dart';
+import 'package:ef/persistence.dart';
 
-class Settings extends StatelessWidget {
 
-  Settings();
+class Settings extends StatefulWidget {
+  _SettingsState createState() => _SettingsState();
+}
 
-  // AppBar _buildAppBar(){
-  //   return AppBar(
-  //       elevation: 4.0,
-  //       brightness: Brightness.light,
-  //       iconTheme: IconThemeData(color: Colors.black),
-  //       backgroundColor: Colors.lightGreen[200],
-  //       title: Text('Settings', style: TextStyle(
-  //         color: Colors.green,
-  //         fontSize: 20,
-  //         fontWeight: FontWeight.bold, 
-  //       ),),
-  //     );
-  // }
+
+class _SettingsState extends State<Settings> {
+  SettingDTO _currentSetting;
+  //Settings();
+ @override
+  void initState() { //built in function of stateful widget
+    super.initState();
+    _fetchCategories(); // fetch function
+  }
+
+  Future<void> _fetchCategories() async { // async but void so theres no need to wait for it
+    SettingDTO incomingSetting = await DBController().getSettingById(1); // get value from database
+    setState(() {// set value
+      _currentSetting = incomingSetting;
+    });
+  }// Page can be loaded and if ready, value will be adapted
+  
 
   AppBar _buildAppBar(String _title){
   return AppBar(
@@ -50,11 +56,16 @@ class Settings extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => Account()),
                   );
                 },
-                title: Text('TestName', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),
+                title: Text(getAccountName(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),
                 leading: CircleAvatar(backgroundColor: Colors.lightGreen[200]),
                 trailing: Icon(Icons.edit, color: Colors.white,),
               ),
             );
+  }
+
+  String getAccountName(){
+    if (_currentSetting == null){return "";}
+    else{return _currentSetting.username;}
   }
 
   Card _buildMainCard(BuildContext context){
@@ -208,3 +219,19 @@ class Settings extends StatelessWidget {
                 );
   }
 }
+
+
+
+// AppBar _buildAppBar(){
+  //   return AppBar(
+  //       elevation: 4.0,
+  //       brightness: Brightness.light,
+  //       iconTheme: IconThemeData(color: Colors.black),
+  //       backgroundColor: Colors.lightGreen[200],
+  //       title: Text('Settings', style: TextStyle(
+  //         color: Colors.green,
+  //         fontSize: 20,
+  //         fontWeight: FontWeight.bold, 
+  //       ),),
+  //     );
+  // }
