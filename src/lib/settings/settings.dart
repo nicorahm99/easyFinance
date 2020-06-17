@@ -1,5 +1,5 @@
 import 'account.dart';
-import 'categories.dart';
+import 'createCategories.dart';
 import 'password.dart';
 import 'security.dart';
 import 'bankbalance.dart';
@@ -77,7 +77,7 @@ class _SettingsState extends State<Settings> {
                 children: <Widget>[
                   ListTile(
                     leading: Icon(Icons.attach_money, color: Colors.green,),
-                    title: Text('Set Initial Bank-Balance'),
+                    title: Text('Set Bank-Balance'),
                     trailing: Icon(Icons.keyboard_arrow_right),
                     onTap: (){
                       //open set bank balance
@@ -104,6 +104,19 @@ class _SettingsState extends State<Settings> {
                   ListTile(
                     leading: Icon(Icons.category, color: Colors.green,),
                     title: Text('Create Categories'),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap: (){
+                      //open change Password
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Categories()),
+                    );
+                    },
+                  ),
+                  buildDevider(),
+                  ListTile(
+                    leading: Icon(Icons.category, color: Colors.green,),
+                    title: Text('Delete Categories'),
                     trailing: Icon(Icons.keyboard_arrow_right),
                     onTap: (){
                       //open change Password
@@ -145,6 +158,20 @@ class _SettingsState extends State<Settings> {
                       context,
                       MaterialPageRoute(builder: (context) => Security()),
                     );
+                    },
+                  ),
+                  buildDevider(),
+                  ListTile(
+                    leading: Icon(Icons.delete, color: Colors.green,),
+                    title: Text('Reset'),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    enabled: false,
+                    onTap: (){
+                      //open change security settings
+                      // Navigator.push(
+                      // context,
+                      // MaterialPageRoute(builder: (context) => Reset()),
+                      // );
                     },
                   ),
                 ],
@@ -219,8 +246,6 @@ class _SettingsState extends State<Settings> {
                 );
   }
 }
-
-
 
 // AppBar _buildAppBar(){
   //   return AppBar(

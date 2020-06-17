@@ -29,7 +29,7 @@ class _PasswordState extends State<Password> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Set Password"),
+          title: Text("Change Password"),
           backgroundColor: Colors.green,
         ),
         body: SingleChildScrollView(
