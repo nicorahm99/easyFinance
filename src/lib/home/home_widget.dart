@@ -17,6 +17,21 @@ class _HomeState extends State<Home> {
   double totalIncome = 0;
   BankbalanceDTO _currentbalance;
 
+  Future<void> _loadInitialValuesForDB() async {
+    List<CategoryDTO> potential = await DBController().categories();
+    if (potential.isEmpty) {
+      DBController().addBasicCategories();
+    }
+    List<SettingDTO> firstsettings = await DBController().settings();
+    if (firstsettings.isEmpty) {
+      DBController().initalsettings();
+    }
+    List<BankbalanceDTO> firstbackbalance = await DBController().bankbalance();
+    if (firstbackbalance.isEmpty) {
+      DBController().initalbankbalance();
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -24,6 +39,7 @@ class _HomeState extends State<Home> {
   }
 
   void _fetchData() async {
+    await _loadInitialValuesForDB();
     _currentbalance = await DBController().getBankbalanceById(1);
     List<TransactionDTO> transactions = await _getTransactionsOfActualMonth();
     transactions.forEach((element) {
