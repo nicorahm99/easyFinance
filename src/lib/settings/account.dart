@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ef/persistence.dart';
 
-class Account extends StatelessWidget {
+class Account extends StatefulWidget {
+  _AccountState createState() => _AccountState();
+}
+
+
+class _AccountState extends State<Account> {
   static GlobalKey<FormState> _formKeySA = GlobalKey<FormState>();
   SettingDTO _setting;// liegt hier dran, das müsste final sein
   SettingDTO currentAccount;

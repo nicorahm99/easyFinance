@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ef/persistence.dart';
 
-class BankBalance extends StatelessWidget {
+
+class BankBalance extends StatefulWidget{
+  _BankBalanceState createState() => _BankBalanceState();
+}
+
+class _BankBalanceState extends State<BankBalance> {
   static GlobalKey<FormState> _formKeySBB = GlobalKey<FormState>();
   BankbalanceDTO _bankbalance;// liegt hier dran, das müsste final sein
 

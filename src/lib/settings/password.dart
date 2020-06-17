@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ef/persistence.dart';
 
-class Password extends StatelessWidget {
+
+class Password extends StatefulWidget{
+  _PasswordState createState() => _PasswordState();
+}
+
+class _PasswordState extends State<Password> {
   static GlobalKey<FormState> _formKeySP = GlobalKey<FormState>();
-  SettingDTO _setting; // liegt hier dran, das müsste final sein
+  SettingDTO _currentSetting;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +82,7 @@ class Password extends StatelessWidget {
                         }
                       },
                       onSaved: (String value) {
-                        _setting.username = value;
+                        _currentSetting.password = value;
                       },
                     ),
                     createDistance(10),
@@ -100,12 +105,15 @@ class Password extends StatelessWidget {
   }
 
   Future<void> save(BuildContext context) async {
+    _currentSetting = await DBController().getSettingById(1);
+    
     if (!_formKeySP.currentState.validate()) {
       return;
     }
+    
     _formKeySP.currentState.save(); // hier springt es raus, validator ok
 
-    await DBController().insertSettings(_setting);
+    await DBController().updateSettings(_currentSetting);
     Navigator.pop(context);
   }
 
