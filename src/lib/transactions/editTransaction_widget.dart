@@ -134,13 +134,14 @@ class _EditTransactionState extends State<EditTransaction> {
   }
 
   Future<void> update() async {
+    TransactionDTO _oldtransaction = await DBController().getTransactionById(_transaction.id);
     _bankBalance = await DBController().getBankbalanceById(1);
     double _currentbalance = _bankBalance.currentbalance;
     double _oldbalance;
-    if (_transaction.type == "income") {
-      _oldbalance = _currentbalance - _transaction.amount;
+    if (_oldtransaction.type == "income") {
+      _oldbalance = _currentbalance - _oldtransaction.amount;
     } else {
-      _oldbalance = _currentbalance + _transaction.amount;
+      _oldbalance = _currentbalance + _oldtransaction.amount;
     }
     
     if (!_formKey.currentState.validate()) {
@@ -164,13 +165,14 @@ class _EditTransactionState extends State<EditTransaction> {
   }
 
   Future<void> delete() async {
+    TransactionDTO _oldtransaction = await DBController().getTransactionById(_transaction.id);
     _bankBalance = await DBController().getBankbalanceById(1);
     double _currentbalance = _bankBalance.currentbalance;
     double _newbalance;
-    if (_transaction.type == "income") {
-      _newbalance = _currentbalance - _transaction.amount;
+    if (_oldtransaction.type == "income") {
+      _newbalance = _currentbalance - _oldtransaction.amount;
     } else {
-      _newbalance = _currentbalance + _transaction.amount;
+      _newbalance = _currentbalance + _oldtransaction.amount;
     }
     _bankBalance.currentbalance = _newbalance;
     

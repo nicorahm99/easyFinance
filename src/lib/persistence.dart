@@ -186,6 +186,28 @@ class DBController {
     );
   }
 
+  Future<TransactionDTO> getTransactionById(int id) async{
+    final Database db = await openDB();
+      
+    List<Map<String, dynamic>> result = await db.query(
+      'transactions',
+      where: "id = ?",
+      whereArgs: [id],
+    );
+
+    if (result.isEmpty){
+      throw new Exception();
+    }
+    return TransactionDTO(
+      id: result[0]['id'],
+      category: result[0]['category'],
+      type: result[0]['type'],
+      amount: result[0]['amount'],
+      dateTime: result[0]['dateTime'],
+      note: result[0]['note'],
+      currentBalance: result[0]['currentBalance']);
+  }
+
   TransactionDTO createTransaction(object) {
     var transaction = TransactionDTO(
         id: object['id'],
