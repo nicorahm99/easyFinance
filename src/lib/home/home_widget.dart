@@ -52,7 +52,7 @@ class _HomeState extends State<Home> {
               charts.ColorUtil.fromDartColor(chartSection.color),
           id: 'PieChartData',
           data: chartData,
-          labelAccessorFn: (ChartSection row, _) => '${row.shownValue}',
+          labelAccessorFn: (ChartSection row, _) => '${row.label}',
         ),
       );
     });
@@ -154,7 +154,7 @@ class _HomeState extends State<Home> {
         textAlign: TextAlign.center,
         text: TextSpan(
           text: 'Current Balance:\n',
-          style: (balance < 0) ? TextStyle(fontSize: 30, color: Colors.red) : TextStyle(fontSize: 30, color: Colors.green),
+          style: (balance < 0) ? GoogleFonts.openSans(fontSize: 30, color: Colors.red) : TextStyle(fontSize: 30, color: Colors.green),
           children: [
             TextSpan(
               text: balance.toStringAsFixed(2) + '€',
@@ -193,7 +193,7 @@ class _HomeState extends State<Home> {
               buildCurrentBalance(),
               buildPieChartContentOrPlaceholder(available),
               buildSpendText(),
-              Text(getRemainingDays().toString() + ' days remaining this month')
+              Text(getRemainingDays().toString() + ' days remaining this month', style: GoogleFonts.openSans(),)
             ]),
           ),
         );
@@ -206,7 +206,7 @@ class ChartSection {
   String type;
   double value;
   Color color;
-  String shownValue;
+  String label;
 
-  ChartSection(this.type, this.value, this.color, this.shownValue);
+  ChartSection(this.type, this.value, this.color, this.label);
 }
