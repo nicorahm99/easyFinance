@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
+  random_color: ^1.0.5
   date_util: ^0.1.4
   google_fonts: ^1.1.0
   #dart_code_metrics: ^1.5.2

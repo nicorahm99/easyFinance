@@ -144,6 +144,27 @@ class DBController {
     });
   }
 
+  Future<List<TransactionDTO>> transactionsByMoth(int thisMonth) async {
+    final Database db = await openDB();
+
+    final List<Map<String, dynamic>> maps = await db.query(
+        'transactions',
+        where: 'dateTime >= ?',
+        whereArgs: [thisMonth]
+      );
+
+    return List.generate(maps.length, (i) {
+      return TransactionDTO(
+          id: maps[i]['id'],
+          category: maps[i]['category'],
+          type: maps[i]['type'],
+          amount: maps[i]['amount'],
+          dateTime: maps[i]['dateTime'],
+          note: maps[i]['note'],
+          currentBalance: maps[i]['currentBalance']);
+    });
+  }
+
   Future<void> updateTransaction(TransactionDTO transaction) async {
     final db = await openDB();
 
