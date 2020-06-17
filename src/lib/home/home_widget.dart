@@ -15,6 +15,7 @@ class _HomeState extends State<Home> {
       new List<charts.Series<ChartSection, String>>();
   double totalExpense = 0;
   double totalIncome = 0;
+  BankbalanceDTO _currentbalance;
 
   @override
   void initState() {
@@ -23,6 +24,7 @@ class _HomeState extends State<Home> {
   }
 
   void _fetchData() async {
+    _currentbalance = await DBController().getBankbalanceById(1);
     List<TransactionDTO> transactions = await _getTransactionsOfActualMonth();
     transactions.forEach((element) {
       if (element.type == 'income') {
@@ -146,7 +148,7 @@ class _HomeState extends State<Home> {
   }
 
   Widget buildCurrentBalance(){
-    double balance = totalIncome - totalExpense;
+    double balance = _currentbalance.currentbalance;
 
     return Padding(
       padding: EdgeInsets.all(16),
