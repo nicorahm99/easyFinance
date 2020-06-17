@@ -15,6 +15,7 @@ class EditTransaction extends StatefulWidget {
 
 class _EditTransactionState extends State<EditTransaction> {
   TransactionDTO _transaction;
+  BankbalanceDTO _bankBalance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void initState() {
@@ -133,17 +134,47 @@ class _EditTransactionState extends State<EditTransaction> {
   }
 
   Future<void> update() async {
+    _bankBalance = await DBController().getBankbalanceById(1);
+    double _currentbalance = _bankBalance.currentbalance;
+    double _oldbalance;
+    if (_transaction.type == "income") {
+      _oldbalance = _currentbalance - _transaction.amount;
+    } else {
+      _oldbalance = _currentbalance + _transaction.amount;
+    }
+    
     if (!_formKey.currentState.validate()) {
       return;
     }
     _formKey.currentState.save();
 
+    double _newBalanceValue;
+
+    if (_transaction.type == "income") {
+      _newBalanceValue = _oldbalance + _transaction.amount;
+    } else {
+      _newBalanceValue = _oldbalance - _transaction.amount;
+    }
+    _bankBalance.currentbalance = _newBalanceValue;
+
+    await DBController().updatebankbalance(_bankBalance);
     await DBController().updateTransaction(_transaction);
     Navigator.pop(context);
     widget.callback();
   }
 
   Future<void> delete() async {
+    _bankBalance = await DBController().getBankbalanceById(1);
+    double _currentbalance = _bankBalance.currentbalance;
+    double _newbalance;
+    if (_transaction.type == "income") {
+      _newbalance = _currentbalance - _transaction.amount;
+    } else {
+      _newbalance = _currentbalance + _transaction.amount;
+    }
+    _bankBalance.currentbalance = _newbalance;
+    
+    await DBController().updatebankbalance(_bankBalance);
     await DBController().deleteTransaction(_transaction.id);
     Navigator.pop(context);
     widget.callback();

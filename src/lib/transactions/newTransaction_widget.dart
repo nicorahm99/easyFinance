@@ -135,19 +135,19 @@ class _NewTransactionState extends State<NewTransaction> {
 
     _currentBalance = await DBController().getBankbalanceById(1);
     double _currentBalanceValue = _currentBalance.currentbalance;
+    double _newBalanceValue;
 
     if (_transaction.type == "income") {
       _transaction.currentBalance = _currentBalanceValue;
-      double _newBalanceValue = _currentBalanceValue + _transaction.amount;
+      _newBalanceValue = _currentBalanceValue + _transaction.amount;
       _currentBalance.currentbalance = _newBalanceValue;
-      await DBController().updatebankbalance(_currentBalance);
     } else {
        _transaction.currentBalance = _currentBalanceValue;
-      double _newBalanceValue = _currentBalanceValue - _transaction.amount;
+      _newBalanceValue = _currentBalanceValue - _transaction.amount;
       _currentBalance.currentbalance = _newBalanceValue;
-      await DBController().updatebankbalance(_currentBalance);
     }
 
+    await DBController().updatebankbalance(_currentBalance);
     await DBController().insertTransaction(_transaction);
     Navigator.pop(context);
     widget.refresh();
