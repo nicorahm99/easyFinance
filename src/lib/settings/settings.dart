@@ -18,10 +18,10 @@ class _SettingsState extends State<Settings> {
  @override
   void initState() { //built in function of stateful widget
     super.initState();
-    _fetchCategories(); // fetch function
+    _fetchData(); // fetch function
   }
 
-  Future<void> _fetchCategories() async { // async but void so theres no need to wait for it
+  Future<void> _fetchData() async { // async but void so theres no need to wait for it
     SettingDTO incomingSetting = await DBController().getSettingById(1); // get value from database
     setState(() {// set value
       _currentSetting = incomingSetting;
@@ -53,7 +53,7 @@ class _SettingsState extends State<Settings> {
                   //open edit profile
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Account()),
+                      MaterialPageRoute(builder: (context) => Account(refresh: _fetchData)),
                   );
                 },
                 title: Text(getAccountName(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),

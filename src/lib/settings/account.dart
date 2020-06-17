@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:ef/persistence.dart';
 
 class Account extends StatefulWidget {
+  @required final Function refresh;
+
+  Account({Key key, this.refresh}) : super(key: key);
   _AccountState createState() => _AccountState();
 }
 
@@ -90,6 +93,7 @@ class _AccountState extends State<Account> {
 
     await DBController().updateSettings(_currentAccount);
     Navigator.pop(context);
+    widget.refresh();
   }
 
   Padding createDistance(double distance) {
