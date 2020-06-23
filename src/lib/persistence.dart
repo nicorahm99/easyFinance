@@ -147,10 +147,13 @@ class DBController {
   Future<List<TransactionDTO>> transactionsByMoth(int thisMonth) async {
     final Database db = await openDB();
 
+    DateTime now = DateTime.fromMillisecondsSinceEpoch(thisMonth);
+    int nextMonth = DateTime(now.year, (now.month + 1) % 12, 1).millisecondsSinceEpoch;
+
     final List<Map<String, dynamic>> maps = await db.query(
         'transactions',
-        where: 'dateTime >= ?',
-        whereArgs: [thisMonth]
+        where: 'dateTime >= ? AND dateTime < ?',
+        whereArgs: [thisMonth, nextMonth]
       );
 
     return List.generate(maps.length, (i) {

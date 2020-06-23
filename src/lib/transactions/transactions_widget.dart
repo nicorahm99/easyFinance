@@ -93,7 +93,7 @@ class _TransactionPageState extends State<TransactionPage> {
     List<Widget> transactionContainers = List<Widget>();
 
     List<TransactionDTO> manipulatedTransactions = _transactions;
-    manipulatedTransactions.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+    manipulatedTransactions.sort((b, a) => a.dateTime.compareTo(b.dateTime));
 
     while (manipulatedTransactions.isNotEmpty) {
       List<TransactionDTO> cutTransactions = getAllTransactionsHavingDate(

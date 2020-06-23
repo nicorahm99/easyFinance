@@ -14,121 +14,12 @@ class DiagramPage extends StatefulWidget {
 }
 
 class _DiagramPageState extends State<DiagramPage> {
-  List<charts.Series<SolidBarData, String>> _seriesData;
-  List<charts.Series<PieChartSection, String>> _seriesPieData;
-  List<charts.Series<Sales, int>> _seriesLineData;
-
-  _generateData() {
-    var data1 = [
-      new SolidBarData(09, 'spend', 30),
-      new SolidBarData(10, 'earned', 45),
-      new SolidBarData(11, 'saved', 25),
-    ];
-    var data2 = [
-      new SolidBarData(09, 'spend', 40),
-      new SolidBarData(10, 'earned', 55),
-      new SolidBarData(11, 'saved', 10),
-    ];
-    var data3 = [
-      new SolidBarData(09, 'spend', 40),
-      new SolidBarData(10, 'earned', 50),
-      new SolidBarData(11, 'saved', 15),
-    ];
-
-    var linesalesdata = [
-      new Sales(0, 45),
-      new Sales(1, 56),
-      new Sales(2, 55),
-      new Sales(3, 60),
-      new Sales(4, 61),
-      new Sales(5, 70),
-    ];
-    var linesalesdata1 = [
-      new Sales(0, 35),
-      new Sales(1, 46),
-      new Sales(2, 45),
-      new Sales(3, 50),
-      new Sales(4, 51),
-      new Sales(5, 60),
-    ];
-
-    var linesalesdata2 = [
-      new Sales(0, 20),
-      new Sales(1, 24),
-      new Sales(2, 25),
-      new Sales(3, 40),
-      new Sales(4, 45),
-      new Sales(5, 60),
-    ];
-
-    _seriesData.add(
-      charts.Series(
-        domainFn: (SolidBarData usage, _) => usage.usage,
-        measureFn: (SolidBarData usage, _) => usage.quantity,
-        id: 'Sep',
-        data: data1,
-        fillPatternFn: (_, __) => charts.FillPatternType.solid,
-        fillColorFn: (SolidBarData usage, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xff990099)),
-      ),
-    );
-
-    _seriesData.add(
-      charts.Series(
-        domainFn: (SolidBarData usage, _) => usage.usage,
-        measureFn: (SolidBarData usage, _) => usage.quantity,
-        id: 'oct',
-        data: data2,
-        fillPatternFn: (_, __) => charts.FillPatternType.solid,
-        fillColorFn: (SolidBarData usage, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xff109618)),
-      ),
-    );
-
-    _seriesData.add(
-      charts.Series(
-        domainFn: (SolidBarData usage, _) => usage.usage,
-        measureFn: (SolidBarData usage, _) => usage.quantity,
-        id: 'nov',
-        data: data3,
-        fillPatternFn: (_, __) => charts.FillPatternType.solid,
-        fillColorFn: (SolidBarData usage, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xffff9900)),
-      ),
-    );
-
-    _seriesLineData.add(
-      charts.Series(
-        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Color(0xff990099)),
-        id: 'SolidBarData',
-        data: linesalesdata,
-        domainFn: (Sales sales, _) => sales.yearval,
-        measureFn: (Sales sales, _) => sales.salesval,
-      ),
-    );
-    _seriesLineData.add(
-      charts.Series(
-        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Color(0xff109618)),
-        id: 'SolidBarData',
-        data: linesalesdata1,
-        domainFn: (Sales sales, _) => sales.yearval,
-        measureFn: (Sales sales, _) => sales.salesval,
-      ),
-    );
-    _seriesLineData.add(
-      charts.Series(
-        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Color(0xffff9900)),
-        id: 'SolidBarData',
-        data: linesalesdata2,
-        domainFn: (Sales sales, _) => sales.yearval,
-        measureFn: (Sales sales, _) => sales.salesval,
-      ),
-    );
-  }
+  List<charts.Series<SolidBarData, String>> _seriesData = List<charts.Series<SolidBarData, String>>();
+  List<charts.Series<PieChartSection, String>> _seriesPieData = List<charts.Series<PieChartSection, String>>();
+  List<charts.Series<LineChartExpenditures, int>> _seriesLineData = List<charts.Series<LineChartExpenditures, int>>();
 
   Future<void> _fetchPieData() async {
-    DateTime today = DateTime.now();
-    DateTime thisMonth = DateTime(today.year, today.month, 1);
+    DateTime thisMonth = getPreviousMonth(0);
     List<TransactionDTO> transactions = await DBController()
         .transactionsByMoth(thisMonth.millisecondsSinceEpoch);
 
@@ -190,14 +81,178 @@ class _DiagramPageState extends State<DiagramPage> {
     });
   }
 
+  List<double> getTotal(List<TransactionDTO> transactions, int index) {
+    double totalSpend = 0;
+    double totalEarned = 0;
+
+    transactions.forEach((transaction) {
+      if (transaction.type == 'income') {
+        totalEarned += transaction.amount;
+      } else {
+        totalSpend += transaction.amount;
+      }
+    });
+
+    return [totalEarned, totalSpend];
+  }
+
+  String getMonthString(int month) {
+    switch (month) {
+      case 1:
+        return 'January';
+      case 2:
+        return 'February';
+      case 3:
+        return 'March';
+      case 4:
+        return 'April';
+      case 5:
+        return 'May';
+      case 6:
+        return 'June';
+      case 7:
+        return 'July';
+      case 8:
+        return 'August';
+      case 9:
+        return 'September';
+      case 10:
+        return 'October';
+      case 11:
+        return 'November';
+      case 12:
+        return 'December';
+    }
+    return '';
+  }
+
+  String getIdString(int key) {
+    switch (key) {
+      case 0:
+        return 'spend';
+      case 1:
+        return 'earned';
+      case 2:
+        return 'saved';
+      default:
+        return '';
+    }
+  }
+
+  Color getColorForId(int key) {
+    switch (key) {
+      case 0:
+        return Color(0xff990099);
+      case 1:
+        return Color(0xff109618);
+      case 2:
+        return Color(0xffff9900);
+      default:
+        return Color(0);
+    }
+  }
+
+  Future<void> _fetchBarData() async {
+    List<List<TransactionDTO>> multipleMonthsTransactions =
+        List<List<TransactionDTO>>();
+
+    for (int i = 0; i < 3; i++) {
+      multipleMonthsTransactions.add(await DBController()
+          .transactionsByMoth(getPreviousMonth(i).millisecondsSinceEpoch));
+    }
+
+    var barData = [
+      List<SolidBarData>(),
+      List<SolidBarData>(),
+      List<SolidBarData>()
+    ]; // spend, earned, saved
+
+    multipleMonthsTransactions.asMap().forEach((index, transactions) {
+      List<double> totals = getTotal(transactions, index);
+      int currentMonth = getPreviousMonth(index).month;
+
+      double savedPercent = totals[0] - totals[1];
+      String currentMonthString = getMonthString(currentMonth);
+
+      barData[0].add(SolidBarData(currentMonthString, currentMonth, totals[1]));
+      barData[1].add(SolidBarData(currentMonthString, currentMonth, totals[0]));
+      barData[2]
+          .add(SolidBarData(currentMonthString, currentMonth, savedPercent));
+    });
+
+    barData.asMap().forEach((key, value) {
+      setState(() {
+        _seriesData.add(
+          charts.Series(
+            domainFn: (SolidBarData usage, _) => usage.month,
+            measureFn: (SolidBarData usage, _) => usage.quantity,
+            id: getIdString(key),
+            data: value,
+            fillPatternFn: (_, __) => key == 2? charts.FillPatternType.forwardHatch : charts.FillPatternType.solid,
+            colorFn: (SolidBarData usage, _) =>
+                charts.ColorUtil.fromDartColor(getColorForId(key)),
+          ),
+        );
+      });
+    });
+  }
+
+  DateTime getPreviousMonth(int monthsBefore) {
+    DateTime today = DateTime.now();
+    int newMonths = today.month - monthsBefore;
+    if (newMonths <= 0) {
+      newMonths += 12;
+    }
+    return DateTime(today.year, newMonths, 1);
+  }
+
+  Future<void> _fetchLineData() async{
+    var lineData = [List<LineChartExpenditures>(), List<LineChartExpenditures>(), List<LineChartExpenditures>()];
+    
+
+    for (int i = 0; i < 3; i++){
+      List<TransactionDTO> currentTransactions = await DBController().transactionsByMoth(getPreviousMonth(i).millisecondsSinceEpoch);
+      var days = List<double>.filled(32, 0); 
+      currentTransactions.forEach((element) {
+        if (element.type == 'expense'){
+          days[DateTime.fromMillisecondsSinceEpoch(element.dateTime).day] += element.amount;
+        }
+      });
+
+      double totalExpense = 0;
+      days.asMap().forEach((key, value) {
+        if (value != 0){
+          totalExpense += value;
+          lineData[i].add(LineChartExpenditures(key, totalExpense));
+        }
+      });
+      if (days[31] == 0){
+        lineData[i].add(LineChartExpenditures(31, totalExpense));
+      }
+    }
+
+    lineData.asMap().forEach((key, element) {
+      setState(() {
+        _seriesLineData.add(
+      charts.Series(
+        colorFn: (__, _) => charts.ColorUtil.fromDartColor(getColorForId(key)),
+        id: getMonthString(getPreviousMonth(key).month),
+        data: element,
+        domainFn: (LineChartExpenditures expenditures, _) => expenditures.day,
+        measureFn: (LineChartExpenditures expenditures, _) => expenditures.expenseValue,
+      ),
+    );
+      });
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    _seriesData = List<charts.Series<SolidBarData, String>>();
-    _seriesPieData = List<charts.Series<PieChartSection, String>>();
-    _seriesLineData = List<charts.Series<Sales, int>>();
-    _generateData();
+
+    _fetchBarData();
     _fetchPieData();
+    _fetchLineData();
   }
 
   @override
@@ -266,30 +321,25 @@ class _DiagramPageState extends State<DiagramPage> {
   List<Widget> buildLineChartContent() {
     return <Widget>[
       Text(
-        'Sales for the first 5 years TESTDATA',
+        'Expenditures of the last three months',
         style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
       ),
       Expanded(
         child: charts.LineChart(_seriesLineData,
             defaultRenderer:
-                new charts.LineRendererConfig(includeArea: true, stacked: true),
+                new charts.LineRendererConfig(includeArea: true, stacked: false),
             animate: true,
             animationDuration: Duration(seconds: 1),
             behaviors: [
-              new charts.ChartTitle('Years',
+              new charts.ChartTitle('Days',
                   behaviorPosition: charts.BehaviorPosition.bottom,
                   titleOutsideJustification:
                       charts.OutsideJustification.middleDrawArea),
-              new charts.ChartTitle('Sales',
+              new charts.ChartTitle('Expenditures',
                   behaviorPosition: charts.BehaviorPosition.start,
                   titleOutsideJustification:
                       charts.OutsideJustification.middleDrawArea),
-              new charts.ChartTitle(
-                'Departments',
-                behaviorPosition: charts.BehaviorPosition.end,
-                titleOutsideJustification:
-                    charts.OutsideJustification.middleDrawArea,
-              )
+              new charts.SeriesLegend()
             ]),
       ),
     ];
@@ -300,18 +350,7 @@ class _DiagramPageState extends State<DiagramPage> {
       return [Container()];
     }
     return <Widget>[
-      Card(
-          elevation: 4.0, // shadow
-          margin: const EdgeInsets.all(8),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          child: Padding(
-              padding: EdgeInsets.all(8),
-              child: Text(
-                'Expenditures by Category this Month',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.openSans(fontSize: 24.0, fontWeight: FontWeight.bold),
-              ))),
+      buildTitleCard('Expenditures this Month by Category'),
       SizedBox(
         height: 10.0,
       ),
@@ -331,29 +370,42 @@ class _DiagramPageState extends State<DiagramPage> {
 
   List<Widget> buildBarChartContent() {
     return <Widget>[
-      Text(
-        'Expenditures and earnings per month',
-        style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-      ),
+      buildTitleCard('Expenditures, Earnings and Savings per month'),
       Expanded(
         child: charts.BarChart(
           _seriesData,
           animate: true,
           barGroupingType: charts.BarGroupingType.grouped,
-          //behaviors: [new charts.SeriesLegend()],
+          behaviors: [new charts.SeriesLegend()],
           animationDuration: Duration(seconds: 1),
         ),
       ),
     ];
   }
+
+  Widget buildTitleCard(String text) {
+    return Card(
+        elevation: 4.0, // shadow
+        margin: const EdgeInsets.all(8),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        child: Padding(
+            padding: EdgeInsets.all(8),
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.openSans(
+                  fontSize: 24.0, fontWeight: FontWeight.bold),
+            )));
+  }
 }
 
 class SolidBarData {
-  String usage;
-  int month;
-  int quantity;
+  String month;
+  int monthNr;
+  double quantity;
 
-  SolidBarData(this.month, this.usage, this.quantity);
+  SolidBarData(this.month, this.monthNr, this.quantity);
 }
 
 class PieChartSection {
@@ -371,9 +423,9 @@ class SortCategoryHelper {
   SortCategoryHelper(this.categoryId, this.transactions);
 }
 
-class Sales {
-  int yearval;
-  int salesval;
+class LineChartExpenditures {
+  int day;
+  double expenseValue;
 
-  Sales(this.yearval, this.salesval);
+  LineChartExpenditures(this.day, this.expenseValue);
 }
