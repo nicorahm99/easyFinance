@@ -32,36 +32,12 @@ class _TransactionPageState extends State<TransactionPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_transactions == null || _transactions.isEmpty) {
-      return Scaffold(
-        appBar: _buildAppBar('Transactions'),
-        body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Center(
-              child: RichText(
-            text: TextSpan(
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.lightBlue,
-              ),
-              children: <TextSpan>[
-                TextSpan(
-                  text: 'Du hast noch nichts Ausgegeben.\n',
-                ),
-                TextSpan(
-                    text: 'Herzlichen Glückwunsch!',
-                    style:
-                        TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
-              ],
-            ),
-          ))
-        ]),
-        floatingActionButton: Align(
-          alignment: Alignment.bottomRight,
-          child: AddButton(_fetchData),
-        ),
-      );
+    if (_transactions == null) {
+      return buildLoadingScreen();
     }
-
+    if (_transactions.isEmpty){
+      return buildInitialTransactionPage();
+    }
     return Scaffold(
         appBar: _buildAppBar('Transactions'),
         body: SingleChildScrollView(
@@ -73,6 +49,44 @@ class _TransactionPageState extends State<TransactionPage> {
         child: AddButton(_fetchData),
       ),
     );
+  }
+
+  Scaffold buildInitialTransactionPage(){
+    return Scaffold(
+        appBar: _buildAppBar('Transactions'),
+        body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Center(
+              child: RichText(
+            text: TextSpan(
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.lightBlue,
+              ),
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'No Transactions yet.\n',
+                ),
+                TextSpan(
+                    text: 'Tap the Button to add one!',
+                    style:
+                        TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ))
+        ]),
+        floatingActionButton: Align(
+          alignment: Alignment.bottomRight,
+          child: 
+              AddButton(_fetchData),
+            ),
+      );
+  }
+
+  Scaffold buildLoadingScreen(){
+    return Scaffold(
+        appBar: _buildAppBar('Transactions'),
+        body: Container()
+      );
   }
 
   AppBar _buildAppBar(String _title){
