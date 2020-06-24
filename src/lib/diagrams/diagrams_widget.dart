@@ -194,12 +194,10 @@ class _DiagramPageState extends State<DiagramPage> {
                 charts.ColorUtil.fromDartColor(getColorForId(key)),
           ),
         );
-        debugPrint('Added Data: $key');
       });
 
     setState(() {
       _seriesBarData = _seriesBarData;
-      debugPrint('###############################state Set########################################');
     });
   }
 
