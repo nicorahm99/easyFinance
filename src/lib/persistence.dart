@@ -409,11 +409,6 @@ Future<void> insertSettings(SettingDTO setting) async {
     );
   }
 
-  void initalsettings(){
-    SettingDTO _initsetting = new SettingDTO(password: "1234", username: "initial");
-    insertSettings(_initsetting);
-  }
-
   Future<SettingDTO> getSetting() async{
     final Database db = await openDB();
       

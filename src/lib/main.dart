@@ -1,5 +1,5 @@
+import 'package:ef/enterPassword_widget.dart';
 import 'package:flutter/material.dart';
-import 'main_widget.dart';
 
 
 void main() => runApp(App());
@@ -10,7 +10,7 @@ class App extends StatelessWidget {
    return MaterialApp(
      debugShowCheckedModeBanner: false,
      title: 'easyFinance',
-     home: Main(),
+     home: PasswordPage(),
    );
  }
 }

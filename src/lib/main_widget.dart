@@ -25,8 +25,10 @@ class _MainState extends State<Main> {
    return Scaffold(
 
      appBar: AppBar(
-       title: Text('easyFinance'),
-       backgroundColor: Colors.green,
+       title: Image(
+      image: AssetImage('lib/assets/easyFinance_200x200.png'),
+    ),
+       backgroundColor: Colors.green[600],
      ),
      body: _children[_currentIndex],
      bottomNavigationBar:

@@ -22,10 +22,6 @@ class _HomeState extends State<Home> {
     if (potential.isEmpty) {
       DBController().addBasicCategories();
     }
-    List<SettingDTO> firstsettings = await DBController().settings();
-    if (firstsettings.isEmpty) {
-      DBController().initalsettings();
-    }
     List<BankbalanceDTO> firstbackbalance = await DBController().bankbalance();
     if (firstbackbalance.isEmpty) {
       DBController().initalbankbalance();
