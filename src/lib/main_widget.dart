@@ -1,8 +1,7 @@
-import 'package:ef/diagrams_widget.dart';
+import 'package:ef/diagrams/diagrams_widget.dart';
 import 'package:ef/home/home_widget.dart';
 import 'package:ef/transactions/transactions_widget.dart';
 import 'package:flutter/material.dart';
-import 'diagrams_widget.dart';
 import './settings/settings.dart';
 
 

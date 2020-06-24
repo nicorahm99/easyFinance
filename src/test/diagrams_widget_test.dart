@@ -1,4 +1,4 @@
-import 'package:ef/diagrams_widget.dart';
+import 'package:ef/diagrams/diagrams_widget.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 
