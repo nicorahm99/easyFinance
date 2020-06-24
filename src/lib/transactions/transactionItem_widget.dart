@@ -69,7 +69,7 @@ class _TransactionItemState extends State<TransactionItem> {
                     padding: EdgeInsets.only(left: 10, right: 10),
                     child: ClipOval(
                       child: Container(
-                        color: Colors.blue,
+                        color: Colors.green,
                         height: 40.0, // height of the button
                         width: 40.0, // width of the button
                         child: Center(

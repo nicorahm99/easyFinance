@@ -16,7 +16,7 @@ class AddButton extends StatelessWidget {
         },
         child: ClipOval(
           child: Container(
-              color: Colors.blue,
+              color: Colors.green,
               height: 60.0, // height of the button
               width: 60.0, // width of the button
               child: FittedBox(

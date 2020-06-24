@@ -56,7 +56,7 @@ class _PasswordPageState extends State<PasswordPage> {
   Widget buildScaffold(List<Widget> body) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('easyFinance'),
+          title: Text(''),
           backgroundColor: Colors.green,
         ),
         body: SingleChildScrollView(
@@ -109,13 +109,15 @@ class _PasswordPageState extends State<PasswordPage> {
         ),
         buildEasyFinanceLogo(),
         SizedBox(
-          height: 100,
+          height: 50,
         ),
-        Text(
+        Padding(
+        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),  
+        child:Text(
           'Please set a username and password before you start',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 18, color: Colors.green[500]),
-        ),
+        )),
         Divider(
           height: 30,
         ),

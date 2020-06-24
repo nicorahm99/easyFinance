@@ -60,7 +60,7 @@ class _TransactionPageState extends State<TransactionPage> {
             text: TextSpan(
               style: TextStyle(
                 fontSize: 20,
-                color: Colors.lightBlue,
+                color: Colors.green,
               ),
               children: <TextSpan>[
                 TextSpan(
