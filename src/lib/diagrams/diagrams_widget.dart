@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import 'package:ef/persistence.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -14,7 +16,7 @@ class DiagramPage extends StatefulWidget {
 }
 
 class _DiagramPageState extends State<DiagramPage> {
-  List<charts.Series<SolidBarData, String>> _seriesData = List<charts.Series<SolidBarData, String>>();
+  List<charts.Series<SolidBarData, String>> _seriesBarData = List<charts.Series<SolidBarData, String>>();
   List<charts.Series<PieChartSection, String>> _seriesPieData = List<charts.Series<PieChartSection, String>>();
   List<charts.Series<LineChartExpenditures, int>> _seriesLineData = List<charts.Series<LineChartExpenditures, int>>();
 
@@ -181,8 +183,7 @@ class _DiagramPageState extends State<DiagramPage> {
     });
 
     barData.asMap().forEach((key, value) {
-      setState(() {
-        _seriesData.add(
+        _seriesBarData.add(
           charts.Series(
             domainFn: (SolidBarData usage, _) => usage.month,
             measureFn: (SolidBarData usage, _) => usage.quantity,
@@ -193,7 +194,12 @@ class _DiagramPageState extends State<DiagramPage> {
                 charts.ColorUtil.fromDartColor(getColorForId(key)),
           ),
         );
+        debugPrint('Added Data: $key');
       });
+
+    setState(() {
+      _seriesBarData = _seriesBarData;
+      debugPrint('###############################state Set########################################');
     });
   }
 
@@ -257,16 +263,30 @@ class _DiagramPageState extends State<DiagramPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    if (_seriesBarData.isNotEmpty){
+      return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: DefaultTabController(
-        length: 3,
-        child: Scaffold(
+        home: DefaultTabController(
+          length: 3,
+          child: Scaffold(
           appBar: createAppBar(),
           body: buildTabBarView(),
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return MaterialApp(
+      debugShowCheckedModeBanner: false,
+        home: DefaultTabController(
+          length: 3,
+          child: Scaffold(
+          appBar: createAppBar(),
+          body: Container(),
+          ),
+        ),
+      );
+    }
+    
   }
 
   TabBar createAppBar() {
@@ -373,7 +393,7 @@ class _DiagramPageState extends State<DiagramPage> {
       buildTitleCard('Expenditures, Earnings and Savings per month'),
       Expanded(
         child: charts.BarChart(
-          _seriesData,
+          _seriesBarData,
           animate: true,
           barGroupingType: charts.BarGroupingType.grouped,
           behaviors: [new charts.SeriesLegend()],
