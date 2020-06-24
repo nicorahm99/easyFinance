@@ -1,8 +1,11 @@
+import 'package:ef/settings/deleteCategories.dart';
+
 import 'account.dart';
 import 'createCategories.dart';
 import 'password.dart';
 import 'security.dart';
 import 'bankbalance.dart';
+import 'deleteCategories.dart';
 import 'package:flutter/material.dart';
 import 'package:ef/persistence.dart';
 
@@ -122,8 +125,8 @@ class _SettingsState extends State<Settings> {
                       //open change Password
                       Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Categories()),
-                    );
+                      MaterialPageRoute(builder: (context) => DeleteCategories()),
+                      );
                     },
                   ),
                   buildDevider(),
@@ -168,10 +171,6 @@ class _SettingsState extends State<Settings> {
                     enabled: false,
                     onTap: (){
                       //open change security settings
-                      // Navigator.push(
-                      // context,
-                      // MaterialPageRoute(builder: (context) => Reset()),
-                      // );
                     },
                   ),
                 ],
