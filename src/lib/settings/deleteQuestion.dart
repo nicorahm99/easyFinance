@@ -74,4 +74,15 @@ class _DeleteQuestionState extends State<DeleteQuestion> {
     return Padding(padding: EdgeInsets.only(top: distance));
   }
 
+  void checkforunCatTransaction(String _name, int _id) async {
+    List<TransactionDTO> _transactions = await DBController().transactions();
+    if (_id != 1 || _name != 'Miscellaneous') {
+      _transactions.forEach((element) {
+        if (element.category == _id) {
+          element.category = 1;
+          DBController().updateTransaction(element);
+        }
+       });
+    }
+  }
 }
