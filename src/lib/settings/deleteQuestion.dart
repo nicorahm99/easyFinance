@@ -48,7 +48,8 @@ class _DeleteQuestionState extends State<DeleteQuestion> {
                   side: BorderSide(color: Colors.green, width: 1)),
               onPressed: () {
                 // Navigate back to first route when tapped.
-                if (_id != 1 || widget._name == 'Miscellaneous'){DBController().deleteCategory(_id);}
+                checkforunCatTransaction(widget._name, _id);
+                if (_id != 1 || widget._name != 'Miscellaneous'){DBController().deleteCategory(_id);}
                 Navigator.pop(context);
                 widget.refresh();
               },
