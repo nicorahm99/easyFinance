@@ -78,104 +78,40 @@ class _SettingsState extends State<Settings> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
               child: Column(
                 children: <Widget>[
-                  ListTile(
-                    leading: Icon(Icons.attach_money, color: Colors.green,),
-                    title: Text('Set Bank-Balance'),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: (){
-                      //open set bank balance
-                      Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BankBalance()),
-                    );
-                    },
-                  ),
+                  listTile(context, 'Set Bank-Balance', Icons.attach_money, true,  BankBalance()),
                   buildDevider(),
-                  ListTile(
-                    leading: Icon(Icons.lock_outline, color: Colors.green,),
-                    title: Text('Change Password'),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: (){
-                      //open change Password
-                      Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Password()),
-                    );
-                    },
-                  ),
+                  listTile(context, 'Change Password', Icons.lock_outline, true, Password()),
                   buildDevider(),
-                  ListTile(
-                    leading: Icon(Icons.category, color: Colors.green,),
-                    title: Text('Create Categories'),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: (){
-                      //open change Password
-                      Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Categories()),
-                    );
-                    },
-                  ),
+                  listTile(context, 'Create Categories', Icons.category, true, Categories()),
                   buildDevider(),
-                  ListTile(
-                    leading: Icon(Icons.category, color: Colors.green,),
-                    title: Text('Delete Categories'),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: (){
-                      //open change Password
-                      Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => DeleteCategories()),
-                      );
-                    },
-                  ),
+                  listTile(context, 'Delete Categories', Icons.category, true, DeleteCategories()),
                   buildDevider(),
-                  ListTile(
-                    leading: Icon(Icons.language, color: Colors.green,),
-                    title: Text('Change Language'),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    enabled: false,
-                    onTap: (){
-                      //open change language
-                    },
-                  ),
+                  listTile(context, 'Change Language', Icons.language, false, Security()),
                   buildDevider(),
-                  ListTile(
-                    leading: Icon(Icons.location_on, color: Colors.green,),
-                    title: Text('Change Location'),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    enabled: false,
-                    onTap: (){
-                      //open change location
-                    },
-                  ),
+                  listTile(context, 'Change Location', Icons.location_on, false, Security()),
                   buildDevider(),
-                  ListTile(
-                    leading: Icon(Icons.security, color: Colors.green,),
-                    title: Text('Security'),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    enabled: false,
-                    onTap: (){
-                      //open change security settings
-                      Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Security()),
-                    );
-                    },
-                  ),
+                  listTile(context, 'Security', Icons.security, false, Security()),
                   buildDevider(),
-                  ListTile(
-                    leading: Icon(Icons.delete, color: Colors.green,),
-                    title: Text('Reset'),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    enabled: false,
-                    onTap: (){
-                      //open change security settings
-                    },
-                  ),
+                  listTile(context, 'Reset', Icons.delete, false, DeleteCategories()),
                 ],
               ),
             );
+  }
+
+  ListTile listTile(BuildContext context, String name, IconData icon, bool enabled, Widget myclass) {
+    return ListTile(
+                  leading: Icon(icon, color: Colors.green,),
+                  title: Text(name),
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                  enabled: enabled,
+                  onTap: (){
+                    //open change Password
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => myclass),
+                  );
+                  },
+                );
   }
 
   @override
@@ -202,30 +138,30 @@ class _SettingsState extends State<Settings> {
               ),
             ),
             SwitchListTile(
-              //dense: true,
               activeColor: Colors.green,
+<<<<<<< HEAD
               //contentPadding: const EdgeInsets.all(0),
               value: false,
+=======
+              value: true,
+>>>>>>> formatted code
               title: Text("Received notification"),
               onChanged: null,
             ),
             SwitchListTile(
               activeColor: Colors.green,
-              //contentPadding: const EdgeInsets.all(0),
               value: false,
               title: Text("Bank Balance Warnings"),
-              onChanged: null, //(val){},
+              onChanged: null,
             ),
             SwitchListTile(
               activeColor: Colors.green,
-              //contentPadding: const EdgeInsets.all(0),
               value: false,
               title: Text("Received Transaction"),
               onChanged: null,
             ),
             SwitchListTile(
               activeColor: Colors.green,
-              //contentPadding: const EdgeInsets.all(0),
               value: false,
               title: Text("Received App Updates"),
               onChanged: null,
