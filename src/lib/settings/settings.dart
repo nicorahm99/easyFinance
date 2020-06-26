@@ -137,39 +137,23 @@ class _SettingsState extends State<Settings> {
               color: Colors.green,
               ),
             ),
-            SwitchListTile(
-              activeColor: Colors.green,
-<<<<<<< HEAD
-              //contentPadding: const EdgeInsets.all(0),
-              value: false,
-=======
-              value: true,
->>>>>>> formatted code
-              title: Text("Received notification"),
-              onChanged: null,
-            ),
-            SwitchListTile(
-              activeColor: Colors.green,
-              value: false,
-              title: Text("Bank Balance Warnings"),
-              onChanged: null,
-            ),
-            SwitchListTile(
-              activeColor: Colors.green,
-              value: false,
-              title: Text("Received Transaction"),
-              onChanged: null,
-            ),
-            SwitchListTile(
-              activeColor: Colors.green,
-              value: false,
-              title: Text("Received App Updates"),
-              onChanged: null,
-            ),
+            buildSwitchListTile(false, "Received notification"),
+            buildSwitchListTile(false, "Bank Balance Warnings"),
+            buildSwitchListTile(false, "Received Transaction"),
+            buildSwitchListTile(false, "Received App Updates"),
           ],
         )
       ),
     );
+  }
+  
+  SwitchListTile buildSwitchListTile(bool val, String text) {
+      return SwitchListTile(
+              activeColor: Colors.green,
+              value: val,
+              title: Text(text),
+              onChanged: null,
+            );
   }
 
   Container buildDevider() {
