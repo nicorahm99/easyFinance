@@ -12,7 +12,6 @@ class DeleteCategories extends StatefulWidget {
 
 
 class _DelCatState extends State<DeleteCategories> {
-  static GlobalKey<FormState> _formKeySA = GlobalKey<FormState>();
   List<CategoryDTO> _categories;
 
   @override
@@ -37,7 +36,7 @@ class _DelCatState extends State<DeleteCategories> {
                       //open set bank balance
                       Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DeleteQuestion(_categories[index].category, index, _categories))
+                      MaterialPageRoute(builder: (context) => DeleteQuestion(_categories[index].category, index, _categories, _fetchCategories))
                       );
                     },
                   );
