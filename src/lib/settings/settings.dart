@@ -205,7 +205,7 @@ class _SettingsState extends State<Settings> {
               //dense: true,
               activeColor: Colors.green,
               //contentPadding: const EdgeInsets.all(0),
-              value: true,
+              value: false,
               title: Text("Received notification"),
               onChanged: null,
             ),

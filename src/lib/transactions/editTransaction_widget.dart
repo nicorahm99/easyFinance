@@ -8,8 +8,6 @@ class EditTransaction extends StatefulWidget {
   final Function callback;
   const EditTransaction(this.transaction, this.callback);
 
-  // EditTransaction({Key key, this.transaction}) : super(key: key);
-
   _EditTransactionState createState() => _EditTransactionState();
 }
 

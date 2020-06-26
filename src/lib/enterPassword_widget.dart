@@ -95,7 +95,7 @@ class _PasswordPageState extends State<PasswordPage> {
       buildCard(Form(
               key: _formKey,
               child: Column(children: <Widget>[
-                buildPasswordField(),
+                buildCheckPasswordField(),
                 buildSubmitButton()
               ])))
     ]);
@@ -127,7 +127,7 @@ class _PasswordPageState extends State<PasswordPage> {
             children: <Widget>[
               buildUsernameField(),
               buildSetPasswordField(),
-              buildCheckPasswordField(),
+              buildConfirmPasswordField(),
               buildSubmitButton()
             ],
           ),
@@ -150,6 +150,7 @@ class _PasswordPageState extends State<PasswordPage> {
 
   RaisedButton buildSubmitButton() {
     return RaisedButton(
+      key: Key('logInButton'),
       child: Text('Log In'),
       onPressed: submit,
     );
@@ -157,6 +158,7 @@ class _PasswordPageState extends State<PasswordPage> {
 
   TextFormField buildUsernameField() {
     return TextFormField(
+      key: Key('username'),
       decoration: InputDecoration(labelText: 'username'),
       onChanged: (String value) {
         setState(() {
@@ -172,8 +174,9 @@ class _PasswordPageState extends State<PasswordPage> {
     );
   }
 
-  TextFormField buildCheckPasswordField() {
+  TextFormField buildConfirmPasswordField() {
     return TextFormField(
+      key: Key('confirmPassword'),
       decoration: InputDecoration(labelText: 'repeat password'),
       obscureText: true,
       onChanged: (String value) {
@@ -192,6 +195,7 @@ class _PasswordPageState extends State<PasswordPage> {
 
   TextFormField buildSetPasswordField() {
     return TextFormField(
+      key: Key('setPassword'),
       decoration: InputDecoration(labelText: 'password'),
       obscureText: true,
       onChanged: (String value) {
@@ -208,8 +212,9 @@ class _PasswordPageState extends State<PasswordPage> {
     );
   }
 
-  TextFormField buildPasswordField() {
+  TextFormField buildCheckPasswordField() {
     return TextFormField(
+      key: Key('checkPassword'),
       decoration: InputDecoration(labelText: 'password'),
       obscureText: true,
       onChanged: (String value) {
