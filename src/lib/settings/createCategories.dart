@@ -26,52 +26,56 @@ class Categories extends StatelessWidget {
                       style: new TextStyle(color: Colors.green, fontSize: 25.0),
                     ),
                     createDistance(30),
-
-                    //textfield
-                    new TextFormField(
-                      key: Key('categoryInputField'),
-                      decoration: new InputDecoration(
-                        labelText: "category",
-                        fillColor: Colors.white,
-                        border: new OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(25.0),
-                          borderSide: new BorderSide(),
-                        ),
-                      ),
-                      style: new TextStyle(
-                        fontFamily: "Poppins",
-                      ),
-
-                      //validator
-                      validator: (val) {
-                        if (val.length == 0) {
-                          return "category cannot be empty";
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (String value) {
-                        DBController().insertCategory(value);
-                      },
-                    ),
+                    buildCategoryInputField(),
                     createDistance(10),
-
-                    //button
-                    RaisedButton(
-                      key: Key('saveButton'),
-                      color: Colors.white,
-                      //textColor: Colors.black,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: Colors.green, width: 1)),
-                      onPressed: () {
-                        // Navigate back to first route when tapped.
-                        save(context);
-                      },
-                      child: Text('Save'),
-                    ),
+                    buildSaveButton(context),
                   ])),
                 ))));
+  }
+
+  RaisedButton buildSaveButton(BuildContext context) {
+    return RaisedButton(
+                    key: Key('saveButton'),
+                    color: Colors.white,
+                    //textColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.green, width: 1)),
+                    onPressed: () {
+                      // Navigate back to first route when tapped.
+                      save(context);
+                    },
+                    child: Text('Save'),
+                  );
+  }
+
+  TextFormField buildCategoryInputField() {
+    return new TextFormField(
+                    key: Key('categoryInputField'),
+                    decoration: new InputDecoration(
+                      labelText: "category",
+                      fillColor: Colors.white,
+                      border: new OutlineInputBorder(
+                        borderRadius: new BorderRadius.circular(25.0),
+                        borderSide: new BorderSide(),
+                      ),
+                    ),
+                    style: new TextStyle(
+                      fontFamily: "Poppins",
+                    ),
+
+                    //validator
+                    validator: (val) {
+                      if (val.length == 0) {
+                        return "category cannot be empty";
+                      } else {
+                        return null;
+                      }
+                    },
+                    onSaved: (String value) {
+                      DBController().insertCategory(value);
+                    },
+                  );
   }
 
   Future<void> save(BuildContext context) async {

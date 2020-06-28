@@ -165,17 +165,3 @@ class _SettingsState extends State<Settings> {
                 );
   }
 }
-
-// AppBar _buildAppBar(){
-  //   return AppBar(
-  //       elevation: 4.0,
-  //       brightness: Brightness.light,
-  //       iconTheme: IconThemeData(color: Colors.black),
-  //       backgroundColor: Colors.lightGreen[200],
-  //       title: Text('Settings', style: TextStyle(
-  //         color: Colors.green,
-  //         fontSize: 20,
-  //         fontWeight: FontWeight.bold, 
-  //       ),),
-  //     );
-  // }
