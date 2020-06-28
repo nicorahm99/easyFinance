@@ -132,7 +132,8 @@ class _EditTransactionState extends State<EditTransaction> {
   }
 
   Future<void> update() async {
-    TransactionDTO _oldtransaction = await DBController().getTransactionById(_transaction.id);
+    TransactionDTO _oldtransaction =
+        await DBController().getTransactionById(_transaction.id);
     _bankBalance = await DBController().getBankbalance();
     double _currentbalance = _bankBalance.currentbalance;
     double _oldbalance;
@@ -141,7 +142,7 @@ class _EditTransactionState extends State<EditTransaction> {
     } else {
       _oldbalance = _currentbalance + _oldtransaction.amount;
     }
-    
+
     if (!_formKey.currentState.validate()) {
       return;
     }
@@ -163,7 +164,8 @@ class _EditTransactionState extends State<EditTransaction> {
   }
 
   Future<void> delete() async {
-    TransactionDTO _oldtransaction = await DBController().getTransactionById(_transaction.id);
+    TransactionDTO _oldtransaction =
+        await DBController().getTransactionById(_transaction.id);
     _bankBalance = await DBController().getBankbalance();
     double _currentbalance = _bankBalance.currentbalance;
     double _newbalance;
@@ -173,7 +175,7 @@ class _EditTransactionState extends State<EditTransaction> {
       _newbalance = _currentbalance + _oldtransaction.amount;
     }
     _bankBalance.currentbalance = _newbalance;
-    
+
     await DBController().updatebankbalance(_bankBalance);
     await DBController().deleteTransaction(_transaction.id);
     Navigator.pop(context);
@@ -203,6 +205,7 @@ class _EditTransactionState extends State<EditTransaction> {
                   children: <Widget>[
                     Expanded(
                         child: RaisedButton(
+                      key: Key('submitButton'),
                       onPressed: () => update(),
                       child: Icon(Icons.save),
                     )),
@@ -211,6 +214,7 @@ class _EditTransactionState extends State<EditTransaction> {
                     ),
                     Expanded(
                         child: RaisedButton(
+                      key: Key('deleteButton'),
                       onPressed: () => delete(),
                       child: Icon(Icons.delete, color: Colors.red),
                     ))

@@ -38,6 +38,7 @@ class _AccountState extends State<Account> {
 
                     //textfield
                     new TextFormField(
+                      key: Key('usernameInputField'),
                       decoration: new InputDecoration(
                         labelText: "username",
                         fillColor: Colors.white,
@@ -66,6 +67,7 @@ class _AccountState extends State<Account> {
 
                     //button
                     RaisedButton(
+                      key: Key('saveButton'),
                         color: Colors.white,
                         //textColor: Colors.black,
                         shape: RoundedRectangleBorder(

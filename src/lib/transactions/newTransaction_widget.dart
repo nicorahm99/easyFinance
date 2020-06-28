@@ -20,6 +20,7 @@ class _NewTransactionState extends State<NewTransaction> {
 
   Widget _buildAmount() {
     return TextFormField(
+      key: Key('amountTextfield'),
       decoration: InputDecoration(labelText: 'Amount'),
       keyboardType: TextInputType.number,
       validator: (String value) {
@@ -181,6 +182,7 @@ class _NewTransactionState extends State<NewTransaction> {
                   height: 50,
                 ),
                 RaisedButton(
+                  key: Key('submitButton'),
                   onPressed: () => submit(),
                   child: Icon(Icons.save),
                 )

@@ -29,6 +29,7 @@ class Categories extends StatelessWidget {
 
                     //textfield
                     new TextFormField(
+                      key: Key('categoryInputField'),
                       decoration: new InputDecoration(
                         labelText: "category",
                         fillColor: Colors.white,
@@ -57,6 +58,7 @@ class Categories extends StatelessWidget {
 
                     //button
                     RaisedButton(
+                      key: Key('saveButton'),
                       color: Colors.white,
                       //textColor: Colors.black,
                       shape: RoundedRectangleBorder(

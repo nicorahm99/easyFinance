@@ -41,6 +41,7 @@ class _DeleteQuestionState extends State<DeleteQuestion> {
             children: [
             createDistance(250),
             RaisedButton(
+              key: Key('deleteButton'),
               color: Colors.white,
               //textColor: Colors.black,
               shape: RoundedRectangleBorder(

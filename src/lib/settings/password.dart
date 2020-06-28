@@ -50,6 +50,7 @@ class _PasswordState extends State<Password> {
 
                     //textfield oldPW
                     new TextFormField(
+                      key: Key('oldPasswordInputField'),
                       decoration: new InputDecoration(
                         labelText:
                             "old Password", // check against value in database
@@ -76,6 +77,7 @@ class _PasswordState extends State<Password> {
                     createDistance(10),
                     //textfield newPW
                     new TextFormField(
+                      key: Key('newPasswordInputField'),
                       decoration: new InputDecoration(
                         labelText: "new Password",
                         fillColor: Colors.white,
@@ -104,6 +106,7 @@ class _PasswordState extends State<Password> {
 
                     //button
                     RaisedButton(
+                      key: Key('saveButton'),
                       color: Colors.white,
                       //textColor: Colors.black,
                       shape: RoundedRectangleBorder(

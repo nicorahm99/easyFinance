@@ -35,6 +35,7 @@ class _BankBalanceState extends State<BankBalance> {
 
                     //textfield
                     new TextFormField(
+                      key: Key('balanceInputField'),
                       keyboardType: TextInputType.number,
                       decoration: new InputDecoration(
                         labelText: "Amount",
@@ -69,6 +70,7 @@ class _BankBalanceState extends State<BankBalance> {
 
                     //button
                     RaisedButton(
+                      key: Key('saveButton'),
                       color: Colors.white,
                       //textColor: Colors.black,
                       shape: RoundedRectangleBorder(

@@ -8,6 +8,7 @@ class AddButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+        key: Key('AddTransactionButton'),
         onTap: () {
           Navigator.push(
             context,
