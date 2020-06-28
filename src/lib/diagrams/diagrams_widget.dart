@@ -20,6 +20,7 @@ class _DiagramPageState extends State<DiagramPage> {
   List<charts.Series<PieChartSection, String>> _seriesPieData = List<charts.Series<PieChartSection, String>>();
   List<charts.Series<LineChartExpenditures, int>> _seriesLineData = List<charts.Series<LineChartExpenditures, int>>();
 
+
   Future<void> _fetchPieData() async {
     DateTime thisMonth = getPreviousMonth(0);
     List<TransactionDTO> transactions = await DBController()
@@ -68,19 +69,23 @@ class _DiagramPageState extends State<DiagramPage> {
       }
     });
 
-    setState(() {
-      _seriesPieData.add(
-        charts.Series(
-          domainFn: (PieChartSection section, _) => section.label,
-          measureFn: (PieChartSection section, _) => section.value,
-          colorFn: (PieChartSection section, _) =>
-              charts.ColorUtil.fromDartColor(section.color),
-          id: 'PieChartData',
-          data: chartData,
-          labelAccessorFn: (PieChartSection section, _) => '${section.label}',
-        ),
-      );
-    });
+    setPieState(chartData);
+  }
+
+  void setPieState(List<PieChartSection> chartData) {
+    return setState(() {
+    _seriesPieData.add(
+      charts.Series(
+        domainFn: (PieChartSection section, _) => section.label,
+        measureFn: (PieChartSection section, _) => section.value,
+        colorFn: (PieChartSection section, _) =>
+            charts.ColorUtil.fromDartColor(section.color),
+        id: 'PieChartData',
+        data: chartData,
+        labelAccessorFn: (PieChartSection section, _) => '${section.label}',
+      ),
+    );
+  });
   }
 
   List<double> getTotal(List<TransactionDTO> transactions, int index) {
